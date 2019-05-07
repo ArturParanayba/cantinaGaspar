@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="671.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projetocantina.View.MenuController">
+    <children>
+        <Pane layoutX="1.0" prefHeight="678.0" prefWidth="974.0">
+            <children>
+                <Button fx:id="btnAbrirCaixa" layoutX="291.0" layoutY="103.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="393.0" style="-fx-background-radius: 100;" text="Abrir Caixa">
+                    <font>
+                        <Font name="System Bold" size="36.0" />
+                    </font>
+                </Button>
+                <Separator layoutY="314.0" prefHeight="43.0" prefWidth="973.0" />
+                <ComboBox fx:id="cbEmissaoRelatorios" layoutX="75.0" layoutY="477.0" prefHeight="36.0" prefWidth="237.0" promptText="Escolha o Relatório" />
+                <DatePicker fx:id="dataInicioRelatorio" layoutX="502.0" layoutY="478.0" prefHeight="36.0" prefWidth="187.0" promptText="data de início..." />
+                <Label layoutX="62.0" layoutY="419.0" prefHeight="43.0" prefWidth="258.0" text="Emissão de Relatorios">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <Label layoutX="611.0" layoutY="419.0" prefHeight="44.0" prefWidth="225.0" text="Período do relatório">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <Label layoutX="471.0" layoutY="486.0" text="De" />
+                <DatePicker fx:id="dataFinalRelatorio" layoutX="755.0" layoutY="477.0" prefHeight="36.0" prefWidth="187.0" promptText="data de conclusão..." />
+                <Label layoutX="723.0" layoutY="487.0" text="Até" />
+                <Button fx:id="btnEmitirRelatorio" layoutX="507.0" layoutY="577.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="390.0" style="-fx-background-radius: 300;" text="Emitir Relatório">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Button>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>
