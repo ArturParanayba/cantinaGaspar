@@ -13,30 +13,30 @@
     <children>
         <Pane layoutX="1.0" prefHeight="678.0" prefWidth="974.0">
             <children>
-                <Button layoutX="290.0" layoutY="51.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="393.0" style="-fx-background-radius: 100;" text="ABRIR CAIXA">
+                <Button fx:id="btnAbrirCaixa" layoutX="291.0" layoutY="103.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="393.0" style="-fx-background-radius: 100;" text="Abrir Caixa">
                     <font>
-                        <Font name="System Bold" size="96.0" />
+                        <Font name="System Bold" size="36.0" />
                     </font>
                 </Button>
                 <Separator layoutY="314.0" prefHeight="43.0" prefWidth="973.0" />
-                <ComboBox fx:id="cbEmissao" layoutX="37.0" layoutY="473.0" prefHeight="36.0" prefWidth="237.0" promptText="Tipos de Relátorios" />
-                <DatePicker layoutX="502.0" layoutY="478.0" prefHeight="36.0" prefWidth="187.0" />
+                <ComboBox fx:id="cbEmissaoRelatorios" layoutX="75.0" layoutY="477.0" prefHeight="36.0" prefWidth="237.0" promptText="Escolha o Relatório" />
+                <DatePicker fx:id="dataInicioRelatorio" layoutX="502.0" layoutY="478.0" prefHeight="36.0" prefWidth="187.0" promptText="data de início..." />
                 <Label layoutX="62.0" layoutY="419.0" prefHeight="43.0" prefWidth="258.0" text="Emissão de Relatorios">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Label>
-                <Label layoutX="673.0" layoutY="404.0" prefHeight="58.0" prefWidth="139.0" text="Periodos">
+                <Label layoutX="611.0" layoutY="419.0" prefHeight="44.0" prefWidth="225.0" text="Período do relatório">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Label>
                 <Label layoutX="471.0" layoutY="486.0" text="De" />
-                <DatePicker layoutX="755.0" layoutY="477.0" prefHeight="36.0" prefWidth="187.0" />
+                <DatePicker fx:id="dataFinalRelatorio" layoutX="755.0" layoutY="477.0" prefHeight="36.0" prefWidth="187.0" promptText="data de conclusão..." />
                 <Label layoutX="723.0" layoutY="487.0" text="Até" />
-                <Button layoutX="577.0" layoutY="577.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="272.0" style="-fx-background-radius: 300;" text="Emitir Relatorio">
+                <Button fx:id="btnEmitirRelatorio" layoutX="507.0" layoutY="577.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="390.0" style="-fx-background-radius: 300;" text="Emitir Relatório">
                     <font>
-                        <Font name="Times New Roman Bold" size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                     </font>
                 </Button>
             </children>
