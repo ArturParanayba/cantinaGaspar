@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import cantina.model.domain.Cliente;
+import cantina.model.POJO.Cliente;
 
 public class ClienteDAO {
-
+//conexão com o banco 
     private Connection connection;
 
     public Connection getConnection() {
@@ -21,14 +21,16 @@ public class ClienteDAO {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-
+    
+//inicio dos metodos CRUD
     public boolean inserir(Cliente cliente) {
-        String sql = "INSERT INTO clientes(nome, cpf, telefone) VALUES(?,?,?)";
+        //alterar nome da tabela de clientes de acordo com o banco!
+        String sql = "INSERT INTO clientes(nome, email"/*saldo)*/+") VALUES(?,?)";/*,?);*/
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getCpf());
-            stmt.setString(3, cliente.getTelefone());
+            stmt.setString(2, cliente.getEmail());
+            //stmt.setDouble(3, cliente.getSaldo());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -38,13 +40,14 @@ public class ClienteDAO {
     }
 
     public boolean alterar(Cliente cliente) {
-        String sql = "UPDATE clientes SET nome=?, cpf=?, telefone=? WHERE cdCliente=?";
+        //alterar nome da tabela de clientes de acordo com o banco!
+        String sql = "UPDATE clientes SET nome=?, email=? "/*saldo*/+" WHERE codCliente=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getCpf());
-            stmt.setString(3, cliente.getTelefone());
-            stmt.setInt(4, cliente.getCdCliente());
+            stmt.setString(2, cliente.getEmail());
+            //stmt.setDouble(3, cliente.getSaldo());
+            stmt.setInt(4, cliente.getCodCliente());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -54,10 +57,11 @@ public class ClienteDAO {
     }
 
     public boolean remover(Cliente cliente) {
-        String sql = "DELETE FROM clientes WHERE cdCliente=?";
+        //alterar nome da tabela de clientes de acordo com o banco!
+        String sql = "DELETE FROM clientes WHERE codCliente=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, cliente.getCdCliente());
+            stmt.setInt(1, cliente.getCodCliente());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -67,6 +71,7 @@ public class ClienteDAO {
     }
 
     public List<Cliente> listar() {
+        //alterar nome da tabela de clientes de acordo com o banco!
         String sql = "SELECT * FROM clientes";
         List<Cliente> retorno = new ArrayList<>();
         try {
@@ -74,10 +79,10 @@ public class ClienteDAO {
             ResultSet resultado = stmt.executeQuery();
             while (resultado.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setCdCliente(resultado.getInt("cdCliente"));
+                cliente.setCodCliente(resultado.getInt("codCliente"));
                 cliente.setNome(resultado.getString("nome"));
-                cliente.setCpf(resultado.getString("cpf"));
-                cliente.setTelefone(resultado.getString("telefone"));
+                cliente.setEmail(resultado.getString("email"));
+                cliente.setSaldo(resultado.getDouble("saldo"));
                 retorno.add(cliente);
             }
         } catch (SQLException ex) {
@@ -87,21 +92,36 @@ public class ClienteDAO {
     }
 
     public Cliente buscar(Cliente cliente) {
-        String sql = "SELECT * FROM clientes WHERE cdCliente=?";
+        //alterar nome da tabela de clientes de acordo com o banco!
+        String sql = "SELECT * FROM clientes WHERE codCliente=?";
         Cliente retorno = new Cliente();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, cliente.getCdCliente());
+            stmt.setInt(1, cliente.getCodCliente());
             ResultSet resultado = stmt.executeQuery();
             if (resultado.next()) {
                 cliente.setNome(resultado.getString("nome"));
-                cliente.setCpf(resultado.getString("cpf"));
-                cliente.setTelefone(resultado.getString("telefone"));
+                cliente.setEmail(resultado.getString("email"));
+                cliente.setSaldo(resultado.getDouble("saldo"));
                 retorno = cliente;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return retorno;
+    }
+    
+    public boolean inserirSaldo(Cliente cliente){
+        
+        String sql = "INSERT INTO clientes(saldo) WHERE codCliente=?, VALUES(?)";
+                try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setDouble(1,cliente.getSaldo());
+            stmt.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 }

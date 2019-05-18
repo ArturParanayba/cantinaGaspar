@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import cantina.model.domain.ItemDeVenda;
-import cantina.model.domain.Produto;
-import cantina.model.domain.Venda;
+import cantina.model.POJO.ItemDeVenda;
+import cantina.model.POJO.Produto;
+import cantina.model.POJO.Venda;
 
 public class ItemDeVendaDAO {
 
@@ -25,13 +25,13 @@ public class ItemDeVendaDAO {
     }
 
     public boolean inserir(ItemDeVenda itemDeVenda) {
-        String sql = "INSERT INTO itensdevenda(quantidade, valor, cdProduto, cdVenda) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO itensdevenda(quantidade, valor, codProduto, codVenda) VALUES(?,?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, itemDeVenda.getQuantidade());
             stmt.setDouble(2, itemDeVenda.getValor());
-            stmt.setInt(3, itemDeVenda.getProduto().getCdProduto());
-            stmt.setInt(4, itemDeVenda.getVenda().getCdVenda());
+            stmt.setInt(3, itemDeVenda.getProduto().getCodProduto());
+            stmt.setInt(4, itemDeVenda.getVenda().getCodVenda());
             
             stmt.execute();
             return true;
@@ -72,8 +72,8 @@ public class ItemDeVendaDAO {
                 itemDeVenda.setQuantidade(resultado.getInt("quantidade"));
                 itemDeVenda.setValor(resultado.getDouble("valor"));
                 
-                produto.setCdProduto(resultado.getInt("cdProduto"));
-                venda.setCdVenda(resultado.getInt("cdVenda"));
+                produto.setCodProduto(resultado.getInt("cdProduto"));
+                venda.setCodVenda(resultado.getInt("cdVenda"));
                 
                 //Obtendo os dados completos do Produto associado ao Item de Venda
                 ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -100,7 +100,7 @@ public class ItemDeVendaDAO {
         List<ItemDeVenda> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, venda.getCdVenda());
+            stmt.setInt(1, venda.getCodVenda());
             ResultSet resultado = stmt.executeQuery();
             while (resultado.next()) {
                 ItemDeVenda itemDeVenda = new ItemDeVenda();
@@ -110,8 +110,8 @@ public class ItemDeVendaDAO {
                 itemDeVenda.setQuantidade(resultado.getInt("quantidade"));
                 itemDeVenda.setValor(resultado.getDouble("valor"));
                 
-                produto.setCdProduto(resultado.getInt("cdProduto"));
-                v.setCdVenda(resultado.getInt("cdVenda"));
+                produto.setCodProduto(resultado.getInt("cdProduto"));
+                v.setCodVenda(resultado.getInt("cdVenda"));
                 
                 //Obtendo os dados completos do Produto associado ao Item de Venda
                 ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -143,8 +143,8 @@ public class ItemDeVendaDAO {
                 itemDeVenda.setQuantidade(resultado.getInt("quantidade"));
                 itemDeVenda.setValor(resultado.getDouble("valor"));
                 
-                produto.setCdProduto(resultado.getInt("cdProduto"));
-                venda.setCdVenda(resultado.getInt("cdVenda"));
+                produto.setCodProduto(resultado.getInt("cdProduto"));
+                venda.setCodVenda(resultado.getInt("cdVenda"));
                 
                 //Obtendo os dados completos do Cliente associado à Venda
                 ProdutoDAO produtoDAO = new ProdutoDAO();

@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import cantina.model.domain.Cliente;
-import cantina.model.domain.ItemDeVenda;
-import cantina.model.domain.Venda;
+import cantina.model.POJO.Cliente;
+import cantina.model.POJO.ItemDeVenda;
+import cantina.model.POJO.Venda;
 
 public class VendaDAO {
 
@@ -34,7 +34,7 @@ public class VendaDAO {
             stmt.setDate(1, Date.valueOf(venda.getData()));
             stmt.setDouble(2, venda.getValor());
             stmt.setBoolean(3, venda.getPago());
-            stmt.setInt(4, venda.getCliente().getCdCliente());
+            stmt.setInt(4, venda.getCliente().getCodCliente());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -50,8 +50,8 @@ public class VendaDAO {
             stmt.setDate(1, Date.valueOf(venda.getData()));
             stmt.setDouble(2, venda.getValor());
             stmt.setBoolean(3, venda.getPago());
-            stmt.setInt(4, venda.getCliente().getCdCliente());
-            stmt.setInt(5, venda.getCdVenda());
+            stmt.setInt(4, venda.getCliente().getCodCliente());
+            stmt.setInt(5, venda.getCodVenda());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -64,7 +64,7 @@ public class VendaDAO {
         String sql = "DELETE FROM vendas WHERE cdVenda=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, venda.getCdVenda());
+            stmt.setInt(1, venda.getCodVenda());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -84,11 +84,11 @@ public class VendaDAO {
                 Cliente cliente = new Cliente();
                 List<ItemDeVenda> itensDeVenda = new ArrayList();
 
-                venda.setCdVenda(resultado.getInt("cdVenda"));
+                venda.setCodVenda(resultado.getInt("cdVenda"));
                 venda.setData(resultado.getDate("data").toLocalDate());
                 venda.setValor(resultado.getDouble("valor"));
                 venda.setPago(resultado.getBoolean("pago"));
-                cliente.setCdCliente(resultado.getInt("cdCliente"));
+                cliente.setCodCliente(resultado.getInt("cdCliente"));
 
                 //Obtendo os dados completos do Cliente associado à Venda
                 ClienteDAO clienteDAO = new ClienteDAO();
@@ -115,15 +115,15 @@ public class VendaDAO {
         Venda retorno = new Venda();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, venda.getCdVenda());
+            stmt.setInt(1, venda.getCodVenda());
             ResultSet resultado = stmt.executeQuery();
             if (resultado.next()) {
                 Cliente cliente = new Cliente();
-                venda.setCdVenda(resultado.getInt("cdVenda"));
+                venda.setCodVenda(resultado.getInt("cdVenda"));
                 venda.setData(resultado.getDate("data").toLocalDate());
                 venda.setValor(resultado.getDouble("valor"));
                 venda.setPago(resultado.getBoolean("pago"));
-                cliente.setCdCliente(resultado.getInt("cdCliente"));
+                cliente.setCodCliente(resultado.getInt("cdCliente"));
                 venda.setCliente(cliente);
                 retorno = venda;
             }
@@ -141,7 +141,7 @@ public class VendaDAO {
             ResultSet resultado = stmt.executeQuery();
 
             if (resultado.next()) {
-                retorno.setCdVenda(resultado.getInt("max"));
+                retorno.setCodVenda(resultado.getInt("max"));
                 return retorno;
             }
         } catch (SQLException ex) {
@@ -150,6 +150,7 @@ public class VendaDAO {
         return retorno;
     }
 
+        //alterar metodo de acordo com o relatorio pedido pelo cliente
     public Map<Integer, ArrayList> listarQuantidadeVendasPorMes() {
         String sql = "select count(cdVenda), extract(year from data) as ano, extract(month from data) as mes from vendas group by ano, mes order by ano, mes";
         Map<Integer, ArrayList> retorno = new HashMap();

@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import cantina.model.domain.Categoria;
-import cantina.model.domain.Produto;
+import cantina.model.POJO.Produto;
 
 public class ProdutoDAO {
 
@@ -24,13 +23,12 @@ public class ProdutoDAO {
     }
 
     public boolean inserir(Produto produto) {
-        String sql = "INSERT INTO produtos(nome, preco, quantidade, cdCategoria) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO produtos(nome, preco, quantidade) VALUES(?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
             stmt.setInt(3, produto.getQuantidade());
-            stmt.setInt(4, produto.getCategoria().getCdCategoria());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -46,8 +44,7 @@ public class ProdutoDAO {
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
             stmt.setInt(3, produto.getQuantidade());
-            stmt.setInt(4, produto.getCategoria().getCdCategoria());
-            stmt.setInt(5, produto.getCdProduto());
+            stmt.setInt(5, produto.getCodProduto());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -60,7 +57,7 @@ public class ProdutoDAO {
         String sql = "DELETE FROM produtos WHERE cdCliente=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, produto.getCdProduto());
+            stmt.setInt(1, produto.getCodProduto());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -77,20 +74,12 @@ public class ProdutoDAO {
             ResultSet resultado = stmt.executeQuery();
             while (resultado.next()) {
                 Produto produto = new Produto();
-                Categoria categoria = new Categoria();
-                produto.setCdProduto(resultado.getInt("cdProduto"));
+                produto.setCodProduto(resultado.getInt("cdProduto"));
                 produto.setNome(resultado.getString("nome"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
-                categoria.setCdCategoria(resultado.getInt("cdCategoria"));
                 
-                //Obtendo os dados completos da Categoria associada ao Produto
-                CategoriaDAO categoriaDAO = new CategoriaDAO();
-                categoriaDAO.setConnection(connection);
-                categoria = categoriaDAO.buscar(categoria);
                 
-                produto.setCategoria(categoria);
-                retorno.add(produto);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,44 +87,18 @@ public class ProdutoDAO {
         return retorno;
     }
     
-    public List<Produto> listarPorCategoria(Categoria categoria) {
-        String sql = "SELECT * FROM produtos WHERE cdCategoria=?";
-        List<Produto> retorno = new ArrayList<>();
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, categoria.getCdCategoria());
-            ResultSet resultado = stmt.executeQuery();
-            while (resultado.next()) {
-                Produto produto = new Produto();
-                produto.setCdProduto(resultado.getInt("cdProduto"));
-                produto.setNome(resultado.getString("nome"));
-                produto.setPreco(resultado.getDouble("preco"));
-                produto.setQuantidade(resultado.getInt("quantidade"));
-                categoria.setCdCategoria(resultado.getInt("cdCategoria"));
-                produto.setCategoria(categoria);
-                retorno.add(produto);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return retorno;
-    }
-
     public Produto buscar(Produto produto) {
         String sql = "SELECT * FROM produtos WHERE cdProduto=?";
         Produto retorno = new Produto();
-        Categoria categoria = new Categoria();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, produto.getCdProduto());
+            stmt.setInt(1, produto.getCodProduto());
             ResultSet resultado = stmt.executeQuery();
             if (resultado.next()) {
-                retorno.setCdProduto(resultado.getInt("cdProduto"));
+                retorno.setCodProduto(resultado.getInt("cdProduto"));
                 retorno.setNome(resultado.getString("nome"));
                 retorno.setPreco(resultado.getDouble("preco"));
                 retorno.setQuantidade(resultado.getInt("quantidade"));
-                categoria.setCdCategoria(resultado.getInt("cdCategoria"));
-                retorno.setCategoria(categoria);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
