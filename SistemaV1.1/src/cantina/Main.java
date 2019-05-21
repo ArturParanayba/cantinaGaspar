@@ -20,19 +20,15 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("view/FXMLVBoxMain.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/VBoxTelaPrincipal.fxml"));
         
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.setTitle("Sistema de Vendas - Cantina Gaspar");
         stage.setResizable(false);
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

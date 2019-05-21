@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.postgresql.util.PSQLException;
 
 public class DatabasePostgreSQL implements Database {
     private Connection connection;
@@ -12,13 +13,18 @@ public class DatabasePostgreSQL implements Database {
     @Override
     public Connection conectar() {
         try {
-            Class.forName("org.postgresql.Driver");
+           Class.forName("org.postgresql.Driver");
             this.connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/javafxmvc", "postgres","postgres");
             return this.connection;
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (ClassNotFoundException e) {
+            System.out.println("Conexão falha por falta da biblioteca.");
+        } catch (SQLException ex) {
             Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        } catch (PSQLException ex){
+            System.out.println("");
         }
+        return null;
+      
     }
 
     @Override

@@ -53,7 +53,9 @@ public class Cliente implements Serializable {
         this.saldo = saldo;
     }
 
-    
+    public void vendaComSaldo(double saldo){
+        
+    }
 
     @Override
     public String toString() {
