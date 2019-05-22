@@ -14,14 +14,15 @@ public class DatabasePostgreSQL implements Database {
     public Connection conectar() {
         try {
            Class.forName("org.postgresql.Driver");
-            this.connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/javafxmvc", "postgres","postgres");
+            this.connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/cantinadb", "postgres","1234");
             return this.connection;
         } catch (ClassNotFoundException e) {
             System.out.println("Conexão falha por falta da biblioteca.");
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PSQLException ex){
-            System.out.println("");
+        } catch (PSQLException ex) {
+            //System.out.println("Conexão negada");
+            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, "conexão negada", ex);
+        } catch (SQLException ex) { 
+            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, "Erro no SQL", ex);
         }
         return null;
       
@@ -32,7 +33,7 @@ public class DatabasePostgreSQL implements Database {
         try {
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabasePostgreSQL.class.getName()).log(Level.SEVERE, "Desconexão impedida por erro no sistema", ex);
         }
     }
 }
