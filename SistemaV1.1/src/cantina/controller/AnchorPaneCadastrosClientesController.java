@@ -31,16 +31,13 @@ public class AnchorPaneCadastrosClientesController implements Initializable {
     private TableView<Cliente> tableViewClientes;
 
     @FXML
-    private TableColumn<Cliente,String> tableColumnClienteCodigo;
-
-    @FXML
     private TableColumn<Cliente,String> tableColumnClienteNome;
 
     @FXML
-    private Label labelClienteCodigo;
+    private TableColumn<Cliente,Float> tableColumnClienteSaldo;
 
     @FXML
-    private Label labelClienteTelefone;
+    private Label labelClienteCodigo;
 
     @FXML
     private Label labelClienteSaldo;
@@ -73,12 +70,17 @@ public class AnchorPaneCadastrosClientesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         clienteDAO.setConnection(connection);
         carregarTableViewCliente();
+        
+        //Listener acionado quando é selecionado o cliente na tableView
+        tableViewClientes.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> selecionaCliente(newValue)
+        );
     }   
     
     //carrega os dados do cliente na tabela
     public void carregarTableViewCliente(){
+        tableColumnClienteSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
         tableColumnClienteNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tableColumnClienteCodigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
     
         listClientes = clienteDAO.listar();
         
@@ -86,4 +88,16 @@ public class AnchorPaneCadastrosClientesController implements Initializable {
         
         tableViewClientes.setItems(observableListClientes);
     }
+    
+    public void selecionaCliente(Cliente cliente){
+        labelClienteCodigo.setText(String.valueOf(cliente.getCodCliente()));
+        labelClienteNome.setText(cliente.getNome());
+        labelClienteEmail.setText(cliente.getEmail());
+        labelClienteSaldo.setText(Double.toString(cliente.getSaldo()));
+        
+        
+    }
+
 }
+
+    
