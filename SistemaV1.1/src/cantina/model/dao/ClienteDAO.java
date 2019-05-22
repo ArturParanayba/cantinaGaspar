@@ -34,7 +34,7 @@ public class ClienteDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao inserir Cliente", ex);
             return false;
         }
     }
@@ -51,7 +51,7 @@ public class ClienteDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao alterar Cliente", ex);
             return false;
         }
     }
@@ -65,7 +65,7 @@ public class ClienteDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao remover Cliente", ex);
             return false;
         }
     }
@@ -86,7 +86,9 @@ public class ClienteDAO {
                 retorno.add(cliente);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //System.err.println("Erro ao listar clientes");
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao listar Cliente", ex);
+     
         }
         return retorno;
     }
@@ -106,7 +108,7 @@ public class ClienteDAO {
                 retorno = cliente;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro na busca" , ex);
         }
         return retorno;
     }
@@ -120,7 +122,7 @@ public class ClienteDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao inserir saldo", ex);
             return false;
         }
     }
