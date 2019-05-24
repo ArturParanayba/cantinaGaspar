@@ -120,6 +120,11 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         Cliente cliente = new Cliente();
         boolean btnConfirmarClicked = showAnchorPaneCadastroDeClientesController(cliente);
         if(btnConfirmarClicked) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmação de Inserção");
+            alert.setHeaderText("Sucesso!");
+            alert.setContentText("Cliente cadastrado.");
+            alert.show();
             clienteDAO.inserir(cliente);
             carregarTableViewCliente();
         }
@@ -136,7 +141,8 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
             }
         }else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Por favor, selecione um cliente na tabela.");
+            alert.setTitle("Ops!");
+            alert.setHeaderText("Por favor, selecione um cliente na tabela.");
             alert.show();
         }
     }
@@ -160,7 +166,8 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
             //carregarTableViewCliente();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Por favor, selecione um cliente na tabela.");
+            alert.setTitle("Ops!");
+            alert.setHeaderText("Por favor, selecione um cliente na tabela.");
             alert.show();
         }
     }    
