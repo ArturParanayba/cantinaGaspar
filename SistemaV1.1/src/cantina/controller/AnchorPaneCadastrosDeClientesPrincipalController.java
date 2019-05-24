@@ -172,7 +172,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if(cliente !=null) {
             Alert alert = new Alert(Alert.AlertType.WARNING,
-            "Você realmente deseja remover este cliente? Esta ação não pode ser desfeita.",
+            "Você realmente deseja remover este cliente? Esta é IRREVERSÍVEL!",
                     ButtonType.YES, ButtonType.NO);
             alert.setTitle("Confirmação de Remoção");
             alert.setHeaderText("Atenção!");
