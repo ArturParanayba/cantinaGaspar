@@ -25,33 +25,36 @@ public class ClienteDAO {
 //inicio dos metodos CRUD
     public boolean inserir(Cliente cliente) {
         //alterar nome da tabela de clientes de acordo com o banco!
-        String sql = "INSERT INTO clientes(nome, email"/*saldo)*/+") VALUES(?,?)";/*,?);*/
+        String sql = "INSERT INTO clientes(nome, email, saldo) VALUES(?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getEmail());
-            //stmt.setDouble(3, cliente.getSaldo());
+            stmt.setDouble(3, cliente.getSaldo());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao inserir Cliente", ex);
+            System.out.println("Erro ao inserir Cliente. Verificar SQL");
+            ex.printStackTrace();
             return false;
         }
     }
 
     public boolean alterar(Cliente cliente) {
         //alterar nome da tabela de clientes de acordo com o banco!
-        String sql = "UPDATE clientes SET nome=?, email=? "/*saldo*/+" WHERE codCliente=?";
+        String sql = "UPDATE clientes SET nome=?, email=?, saldo=? WHERE codCliente=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
+            //stmt.setInt(0, cliente.getCodCliente());
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getEmail());
-            //stmt.setDouble(3, cliente.getSaldo());
+            stmt.setDouble(3, cliente.getSaldo());
             stmt.setInt(4, cliente.getCodCliente());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao alterar Cliente", ex);
+            System.out.println("Erro ao alterar Cliente. Verificar SQL");
+            ex.printStackTrace();
             return false;
         }
     }
@@ -65,7 +68,8 @@ public class ClienteDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao remover Cliente", ex);
+            System.out.println("Erro ao inserir Remover. Verificar SQL");
+            ex.printStackTrace();
             return false;
         }
     }
@@ -87,7 +91,8 @@ public class ClienteDAO {
             }
         } catch (SQLException ex) {
             //System.err.println("Erro ao listar clientes");
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao listar Cliente", ex);
+            System.out.println("Erro ao listar Cliente. Verificar SQL");
+            ex.printStackTrace();
      
         }
         return retorno;
@@ -108,7 +113,8 @@ public class ClienteDAO {
                 retorno = cliente;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro na busca" , ex);
+            System.out.println("Erro na busca. Verificar SQL");
+            ex.printStackTrace();
         }
         return retorno;
     }
@@ -122,7 +128,8 @@ public class ClienteDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, "Erro ao inserir saldo", ex);
+            System.out.println("Erro ao inserir Saldo. Verificar SQL");
+            ex.printStackTrace();
             return false;
         }
     }
