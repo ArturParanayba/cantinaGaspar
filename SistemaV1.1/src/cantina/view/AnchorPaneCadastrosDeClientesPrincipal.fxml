@@ -59,9 +59,10 @@
                      </children>
                   </GridPane>
                   <Group layoutX="100.0" layoutY="299.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="70.0" />
-                  <Button fx:id="btnInserir" layoutX="90.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnInserir" text="Inserir" />
-                  <Button fx:id="btnAlterar" layoutX="157.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnAlterar" text="Alterar" />
-                  <Button fx:id="btnRemover" layoutX="226.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnRemover" text="Remover" />
+                  <Button fx:id="btnInserir" layoutX="133.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnInserir" text="Inserir" />
+                  <Button fx:id="btnAlterar" layoutX="200.0" layoutY="330.0" mnemonicParsing="false" onAction="#btnAlterar" text="Alterar" />
+                  <Button fx:id="btnRemover" layoutX="269.0" layoutY="330.0" mnemonicParsing="false" onAction="#btnRemover" text="Remover" />
+                  <Button fx:id="btnCredito" layoutX="14.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnCredito" text="Crédito" />
                </children>
             </AnchorPane>
         </items>
