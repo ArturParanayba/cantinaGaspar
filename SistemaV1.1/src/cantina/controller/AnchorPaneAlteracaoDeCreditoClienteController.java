@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -98,8 +99,37 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     @FXML
     public void btnCalcular(){
         
-        
+        double deposito = Double.valueOf(textFieldValorDepositado.getText());
+        double valorAtual = Double.valueOf(labelSaldoAtual.getText());
+       try{
+           if (textFieldValorDepositado != null){
+       
+           labelValorAposDeposito.setText(Double.toString(
+                   deposito + valorAtual
+           ));
+           }
+           
+           //tratar este erro!
+       } catch (NumberFormatException ex){
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+               alert.setTitle("Ops!");
+               alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
+               alert.showAndWait();
+               }
+//        if (textFieldValorDepositado != null){
+//       
+//           labelValorAposDeposito.setText(Double.toString(
+//                   deposito + valorAtual
+//           ));
+//        } else {
+//           Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Ops!");
+//            alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
+//            alert.show();
+           
+       
     }
+     
     
     @FXML
     public void btnAddCredito(){
