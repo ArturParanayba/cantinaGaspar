@@ -95,7 +95,7 @@ public class AnchorPaneCadastroDeClientesController implements Initializable {
         
         cliente.setNome(textFieldClienteNome.getText());
         cliente.setEmail(textFieldClienteEmail.getText());
-        //converte texto para double
+        //converte texto para double Double.valueOf()
         cliente.setSaldo(Double.valueOf(textFieldClienteSaldoInicial.getText()));
         
         btnConfirmarClicked = true;
