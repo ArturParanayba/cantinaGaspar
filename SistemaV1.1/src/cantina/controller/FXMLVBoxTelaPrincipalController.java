@@ -18,6 +18,8 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
     @FXML
     private MenuItem menuItemProcessosVendas;
     @FXML
+    private MenuItem menuItemCadastroProduto;  
+    @FXML
     private MenuItem menuItemGraficosVendasPorMes;
     @FXML
     private MenuItem menuItemRelatoriosQuantidadeProdutosEstoque;
@@ -34,6 +36,11 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
             AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastrosDeClientesPrincipal.fxml"));
             anchorPane.getChildren().setAll(a);
     }
+    
+    public void abrirTelaCadastroDeProduto() throws IOException{
+            AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastroDeProduto.fxml"));
+            anchorPane.getChildren().setAll(a);
+    } 
             
     
     
