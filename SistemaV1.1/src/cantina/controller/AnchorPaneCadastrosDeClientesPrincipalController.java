@@ -155,7 +155,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
     public void btnAlterar() throws IOException{
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if(cliente != null){
-            boolean btnConfirmarClicked = showAnchorPaneCadastroDeClientesController(cliente);
+            boolean btnConfirmarClicked = showAnchorPaneAlteracaoCadastroClienteController(cliente);
             if(btnConfirmarClicked) {
                 clienteDAO.alterar(cliente);
                 carregarTableViewCliente();
@@ -211,6 +211,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         
     }
     
+    //ALTERAÇÃO DO CRÉDITO
     public boolean showAnchorPaneAlteracaoDeCreditoClienteController(Cliente cliente) throws IOException{
        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
        FXMLLoader loader = new FXMLLoader();
@@ -236,7 +237,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         return controller.isBtnAddCreditoClicked();
         
     }
-    
+    //CRIAÇÃO de um novo cadastro de cliente
     public boolean showAnchorPaneCadastroDeClientesController(Cliente cliente) throws IOException {
         //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
        FXMLLoader loader = new FXMLLoader();
@@ -262,10 +263,35 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         return controller.isBtnConfirmarClicked();
 
     }
-        
+        //ALTERAÇÃO do cadastro do cliente
+    public boolean showAnchorPaneAlteracaoCadastroClienteController(Cliente cliente) throws IOException {
+        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
+       FXMLLoader loader = new FXMLLoader();
+       loader.setLocation(AnchorPaneAlteracaoCadastroClienteController.class.getResource("/cantina/view/AnchorPaneAlteracaoCadastroCliente.fxml"));
+       AnchorPane page = (AnchorPane) loader.load();
+
+
+       // Criando um Estágio de Diálogo (Stage Dialog)
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Alteração de Cadastro");
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+
+        //Setando o cliente no controller
+        AnchorPaneAlteracaoCadastroClienteController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        //controller.setCliente(cliente);
+
+        //Monstra o Dialog e espera até que o usuario feche
+        dialogStage.showAndWait();
+
+        return controller.isBtnConfirmarClicked();
+    }
+}
     
 
 
-}
+
 
     
