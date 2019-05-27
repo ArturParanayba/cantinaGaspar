@@ -83,9 +83,6 @@ public class AnchorPaneCadastroDeClientesController implements Initializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-        this.textFieldClienteNome.setText(cliente.getNome());
-        this.textFieldClienteEmail.setText(cliente.getEmail());
-        this.textFieldClienteSaldoInicial.setText(Double.toString(cliente.getSaldo()));
         
     }
         

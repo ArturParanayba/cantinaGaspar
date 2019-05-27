@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author artur-paranayba
  */
-public class AnchorPaneCadastroDeProdutoController implements Initializable {
+public class AnchorPaneCadastroDeProdutoPrincipalController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -23,5 +23,6 @@ public class AnchorPaneCadastroDeProdutoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
     
 }

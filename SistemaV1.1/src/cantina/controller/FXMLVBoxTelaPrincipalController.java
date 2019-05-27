@@ -38,7 +38,7 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
     }
     
     public void abrirTelaCadastroDeProduto() throws IOException{
-            AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastroDeProduto.fxml"));
+            AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastroDeProdutoPrincipal.fxml"));
             anchorPane.getChildren().setAll(a);
     } 
             
