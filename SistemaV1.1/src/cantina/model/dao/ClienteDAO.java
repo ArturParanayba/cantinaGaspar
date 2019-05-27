@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import cantina.model.POJO.Cliente;
+import java.sql.Date;
 
 public class ClienteDAO {
 //conexão com o banco 
@@ -23,7 +24,8 @@ public class ClienteDAO {
 //inicio dos metodos CRUD
     public boolean inserir(Cliente cliente) {
         //alterar nome da tabela de clientes de acordo com o banco!
-        String sql = "INSERT INTO clientes(nome, email, saldo) VALUES(?,?,?)";
+        //INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,?,?,?);
+        String sql = "INSERT INTO cliente(nome, email, saldo) VALUES(?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, cliente.getNome());
@@ -40,14 +42,14 @@ public class ClienteDAO {
 
     public boolean alterar(Cliente cliente) {
         //alterar nome da tabela de clientes de acordo com o banco!
-        String sql = "UPDATE clientes SET nome=?, email=?, saldo=? WHERE codCliente=?";
+        String sql = "UPDATE cliente SET nome=?, email=? WHERE codCliente=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             //stmt.setInt(0, cliente.getCodCliente());
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getEmail());
-            stmt.setDouble(3, cliente.getSaldo());
-            stmt.setInt(4, cliente.getCodCliente());
+           // stmt.setDouble(3, cliente.getSaldo());
+            stmt.setInt(3, cliente.getCodCliente());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -74,7 +76,7 @@ public class ClienteDAO {
 
     public List<Cliente> listar() {
         //alterar nome da tabela de clientes de acordo com o banco!
-        String sql = "SELECT * FROM clientes";
+        String sql = "SELECT * FROM cliente";
         List<Cliente> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -119,11 +121,11 @@ public class ClienteDAO {
     
     public boolean inserirSaldo(Cliente cliente){
         
-        String sql = "UPDATE clientes SET saldo=? WHERE codCliente=?";
+            String sql = "INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,'CURRENT_DATE',?,?); INSERT INTO;UPDATE clientes SET saldo=? WHERE codCliente=?";
                 try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setDouble(1,cliente.getSaldo());
-            stmt.setInt(2, cliente.getCodCliente());
+            //stmt.setString(); combo box da opção de pagamento
+            //stmt.setD;
             stmt.execute();
             return true;
         } catch (SQLException ex) {
