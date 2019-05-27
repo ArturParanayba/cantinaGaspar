@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import cantina.model.POJO.Cliente;
 
 public class ClienteDAO {
@@ -121,10 +119,11 @@ public class ClienteDAO {
     
     public boolean inserirSaldo(Cliente cliente){
         
-        String sql = "INSERT INTO clientes(saldo) WHERE codCliente=?, VALUES(?)";
+        String sql = "UPDATE clientes SET saldo=? WHERE codCliente=?";
                 try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setDouble(1,cliente.getSaldo());
+            stmt.setInt(2, cliente.getCodCliente());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -133,4 +132,6 @@ public class ClienteDAO {
             return false;
         }
     }
+    
+
 }

@@ -6,6 +6,8 @@
 package cantina.controller;
 
 import cantina.model.POJO.Cliente;
+import cantina.model.POJO.MetodoDePagamento;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -14,9 +16,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -39,6 +43,9 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
 
     @FXML
     private TextField textFieldValorDepositado;
+            
+    @FXML
+    private ComboBox<MetodoDePagamento> comboBoxMtdPagamento;
 
     @FXML
     private Button btnAddCredito;
@@ -58,19 +65,14 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+       // listarMtdPagamento();
     }    
     
-        /**
-     * @return the dialogStage
-     */
     public Stage getDialogStage() {
         return dialogStage;
     }
 
-    /**
-     * @param dialogStage the dialogStage to set
-     */
+    
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -95,19 +97,27 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
         this.labelSaldoAtual.setText(Double.toString(cliente.getSaldo()));
         
     }
+   
     
     @FXML
     public void btnCalcular(){
         
         double deposito = Double.valueOf(textFieldValorDepositado.getText());
         double valorAtual = Double.valueOf(labelSaldoAtual.getText());
+        double valorNovoSaldo = deposito + valorAtual;
+        
        try{
            if (textFieldValorDepositado != null){
-       
-           labelValorAposDeposito.setText(Double.toString(
-                   deposito + valorAtual
-           ));
-           }
+            labelValorAposDeposito.setText(Double.toString(valorNovoSaldo));
+           
+                if(valorNovoSaldo < 0){
+                   labelValorAposDeposito.setTextFill(Color.RED);
+                } else if (valorNovoSaldo > 0){
+                   labelValorAposDeposito.setTextFill(Color.GREEN); 
+                }
+               
+               
+            }
            
            //tratar este erro!
        } catch (NumberFormatException ex){
