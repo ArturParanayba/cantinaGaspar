@@ -10,6 +10,8 @@ import cantina.model.POJO.MetodoDePagamento;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -45,7 +47,7 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     private TextField textFieldValorDepositado;
             
     @FXML
-    private ComboBox<MetodoDePagamento> comboBoxMtdPagamento;
+    private ComboBox comboBoxMtdPagamento;
 
     @FXML
     private Button btnAddCredito;
@@ -61,12 +63,16 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     public Stage dialogStage;
     public boolean btnAddCreditoClicked = false;
     public Cliente cliente;
-   
+   ObservableList<String> metodoDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência");   
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       // listarMtdPagamento();
+      
+        comboBoxMtdPagamento.setValue("Selecione");
+        comboBoxMtdPagamento.setItems(metodoDePagamento);
     }    
+    
+   
     
     public Stage getDialogStage() {
         return dialogStage;
@@ -98,7 +104,6 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
         
     }
    
-    
     @FXML
     public void btnCalcular(){
         
@@ -106,38 +111,21 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
         double valorAtual = Double.valueOf(labelSaldoAtual.getText());
         double valorNovoSaldo = deposito + valorAtual;
         
-       try{
-           if (textFieldValorDepositado != null){
-            labelValorAposDeposito.setText(Double.toString(valorNovoSaldo));
-           
-                if(valorNovoSaldo < 0){
-                   labelValorAposDeposito.setTextFill(Color.RED);
-                } else if (valorNovoSaldo > 0){
-                   labelValorAposDeposito.setTextFill(Color.GREEN); 
-                }
-               
-               
-            }
-           
-           //tratar este erro!
-       } catch (NumberFormatException ex){
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("Ops!");
-               alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
-               alert.showAndWait();
-               }
-//        if (textFieldValorDepositado != null){
-//       
-//           labelValorAposDeposito.setText(Double.toString(
-//                   deposito + valorAtual
-//           ));
-//        } else {
-//           Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Ops!");
-//            alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
-//            alert.show();
-           
-       
+                if (textFieldValorDepositado != null){
+            labelValorAposDeposito.setText(Double.toString(valorNovoSaldo));         
+                    if(valorNovoSaldo < 0){
+                       labelValorAposDeposito.setTextFill(Color.RED);
+                    } else if (valorNovoSaldo > 0){
+                       labelValorAposDeposito.setTextFill(Color.GREEN); 
+                    }
+                    //tratar erro
+                    } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Ops!");
+                    alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
+                    alert.show();
+        }
+                
     }
      
     
