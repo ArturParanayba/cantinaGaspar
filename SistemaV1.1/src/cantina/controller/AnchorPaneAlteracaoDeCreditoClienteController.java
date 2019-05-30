@@ -6,22 +6,21 @@
 package cantina.controller;
 
 import cantina.model.POJO.Cliente;
-import cantina.model.POJO.MetodoDePagamento;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -107,31 +106,43 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     @FXML
     public void btnCalcular(){
         
+        //Logica da adição do crédito
         double deposito = Double.valueOf(textFieldValorDepositado.getText());
         double valorAtual = Double.valueOf(labelSaldoAtual.getText());
         double valorNovoSaldo = deposito + valorAtual;
         
+        //coloca os numeros com virgula e real(R$)
+        /*NumberFormat df = NumberFormat.getCurrencyInstance();
+        String SaldoEmReal = df.format(valorNovoSaldo); */
+
+        
                 if (textFieldValorDepositado != null){
-            labelValorAposDeposito.setText(Double.toString(valorNovoSaldo));         
-                    if(valorNovoSaldo < 0){
-                       labelValorAposDeposito.setTextFill(Color.RED);
-                    } else if (valorNovoSaldo > 0){
-                       labelValorAposDeposito.setTextFill(Color.GREEN); 
-                    }
+                    //esta linha coloca o valor em R$ com virgula
+                    //labelValorAposDeposito.setText(/*Double.toString*/(SaldoEmReal));
+                    labelValorAposDeposito.setText(Double.toString(valorNovoSaldo));         
+                        if(valorNovoSaldo < 0){
+                            labelValorAposDeposito.setTextFill(Color.RED);
+                        } else if (valorNovoSaldo > 0){
+                            labelValorAposDeposito.setTextFill(Color.GREEN); 
+                        }
                     //tratar erro
-                    } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Ops!");
-                    alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
-                    alert.show();
-        }
+                } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Ops!");
+                alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
+                alert.show();
+                }
+            
                 
     }
      
     
     @FXML
-    public void btnAddCredito(){
-    
+    public void btnAddCredito() throws ParseException{
+        
+    //coloca valor que está em R$41,43 para double    
+    //double saldoDepositado =   DecimalFormat.getNumberInstance().parse(labelValorAposDeposito.getText()).doubleValue();
+    //cliente.setSaldo(saldoDepositado);
     cliente.setSaldo(Double.valueOf(labelValorAposDeposito.getText()));
     btnAddCreditoClicked = true;
     dialogStage.close();
