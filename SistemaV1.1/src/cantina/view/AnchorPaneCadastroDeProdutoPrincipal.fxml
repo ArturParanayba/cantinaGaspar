@@ -20,8 +20,8 @@
                <children>
                   <TableView fx:id="tableViewClientes" layoutX="8.0" layoutY="37.0" prefHeight="398.0" prefWidth="174.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="tableColumnClienteNome" prefWidth="152.0" text="Nome" />
-                      <TableColumn fx:id="tableColumnClienteSaldo" prefWidth="69.0" text="Preço" />
+                      <TableColumn fx:id="tableColumnProdutoNome" prefWidth="152.0" text="Nome" />
+                      <TableColumn fx:id="tableColumnProdutoSaldo" prefWidth="69.0" text="Preço" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -51,8 +51,8 @@
                         <Label text="Código:" />
                         <Label text="Nome:" GridPane.rowIndex="1" />
                         <Label text="Valor:" GridPane.rowIndex="2" />
-                        <Label fx:id="labelClienteCodigo" GridPane.columnIndex="1" />
                         <Label fx:id="labelClienteEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="labelProdutoCodigo" GridPane.columnIndex="1" />
                         <Label fx:id="labelClienteNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>

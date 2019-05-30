@@ -68,7 +68,7 @@ public class ClienteDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao inserir Remover. Verificar SQL");
+            System.err.println("Erro ao inserir Remover. Verificar SQL");
             ex.printStackTrace();
             return false;
         }
@@ -91,7 +91,7 @@ public class ClienteDAO {
             }
         } catch (SQLException ex) {
             //System.err.println("Erro ao listar clientes");
-            System.out.println("Erro ao listar Cliente. Verificar SQL");
+            System.err.println("Erro ao listar Cliente. Verificar SQL");
             ex.printStackTrace();
      
         }
@@ -113,23 +113,28 @@ public class ClienteDAO {
                 retorno = cliente;
             }
         } catch (SQLException ex) {
-            System.out.println("Erro na busca. Verificar SQL");
+            System.err.println("Erro na busca. Verificar SQL");
             ex.printStackTrace();
         }
         return retorno;
     }
     
+    //Verificar como colocar o metodo de pagamento
     public boolean inserirSaldo(Cliente cliente){
         
-            String sql = "INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,'CURRENT_DATE',?,?); INSERT INTO;UPDATE clientes SET saldo=? WHERE codCliente=?";
+            String sql = "INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,'CURRENT_DATE',?,?); UPDATE cliente SET saldo=? WHERE codCliente=?";
                 try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            //stmt.setString(); combo box da opção de pagamento
-            //stmt.setD;
+            //stmt.setString(1, ); combo box da opção de pagamento
+            stmt.setDouble(3, cliente.getSaldo());
+            stmt.setInt(4, cliente.getCodCliente());
+            stmt.setDouble(5, cliente.getSaldo());
+            stmt.setInt(6, cliente.getCodCliente());
+            
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Erro ao inserir Saldo. Verificar SQL");
+            System.err.println("Erro ao inserir Saldo. Verificar SQL");
             ex.printStackTrace();
             return false;
         }
