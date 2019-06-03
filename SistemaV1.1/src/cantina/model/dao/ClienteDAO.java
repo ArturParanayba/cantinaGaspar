@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import cantina.model.POJO.Cliente;
+import cantina.model.POJO.MetodoDePagamento;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ClienteDAO {
 //conexão com o banco 
@@ -23,8 +26,7 @@ public class ClienteDAO {
     
 //inicio dos metodos CRUD
     public boolean inserir(Cliente cliente) {
-        //alterar nome da tabela de clientes de acordo com o banco!
-        //INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,?,?,?);
+        //alterar nome da tabela de clientes de acordo com o banco
         String sql = "INSERT INTO cliente(nome, email, saldo) VALUES(?,?,?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -45,10 +47,8 @@ public class ClienteDAO {
         String sql = "UPDATE cliente SET nome=?, email=? WHERE codCliente=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            //stmt.setInt(0, cliente.getCodCliente());
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getEmail());
-           // stmt.setDouble(3, cliente.getSaldo());
             stmt.setInt(3, cliente.getCodCliente());
             stmt.execute();
             return true;
@@ -120,24 +120,42 @@ public class ClienteDAO {
     }
     
     //Verificar como colocar o metodo de pagamento
-    public boolean inserirSaldo(Cliente cliente){
+    public boolean inserirSaldo(Cliente cliente, MetodoDePagamento metodoDePagamento){     
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	LocalDate localDate = LocalDate.now();
         
-            String sql = "INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,'CURRENT_DATE',?,?); UPDATE cliente SET saldo=? WHERE codCliente=?";
-                try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            //stmt.setString(1, ); combo box da opção de pagamento
-            stmt.setDouble(3, cliente.getSaldo());
-            stmt.setInt(4, cliente.getCodCliente());
-            stmt.setDouble(5, cliente.getSaldo());
-            stmt.setInt(6, cliente.getCodCliente());
+        try {
+            //INSERT
+            String insert = "INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,?,?,?)";
+            PreparedStatement insertStmt = connection.prepareStatement(insert);
+            insertStmt.setString(1, metodoDePagamento.getMetodoDePagamento());
+            insertStmt.setDate(2, Date.valueOf(dtf.format(localDate)));
+            insertStmt.setDouble(3, cliente.getSaldo());
+            insertStmt.setInt(4, cliente.getCodCliente());
             
-            stmt.execute();
+            insertStmt.execute();
+            
+            //UPDATE
+            String update = "UPDATE cliente SET saldo=? WHERE codCliente=?";
+            PreparedStatement updateStmt = connection.prepareStatement(update);
+            updateStmt.setDouble(1, cliente.getSaldo());
+            updateStmt.setInt(2, cliente.getCodCliente());
+
+            updateStmt.execute();
+            
             return true;
-        } catch (SQLException ex) {
-            System.err.println("Erro ao inserir Saldo. Verificar SQL");
+            
+            }catch(SQLException ex){
+              System.err.println("Erro ao inserir Saldo. Verificar SQL");
             ex.printStackTrace();
-            return false;
-        }
+            return false;      
+            }
+        
+
+        
+       
+       
+                
     }
     
 

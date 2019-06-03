@@ -2,6 +2,7 @@
 package cantina.controller;
 
 import cantina.model.POJO.Cliente;
+import cantina.model.POJO.MetodoDePagamento;
 import cantina.model.dao.ClienteDAO;
 import cantina.model.database.Database;
 import cantina.model.database.DatabaseFactory;
@@ -195,10 +196,11 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
     
     public void btnCredito() throws IOException {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
+        MetodoDePagamento metodoDePagamento = new MetodoDePagamento();
         if(cliente != null){
             boolean btnAddCreditoClicked = showAnchorPaneAlteracaoDeCreditoClienteController(cliente);   
             if(btnAddCreditoClicked) {
-                clienteDAO.inserirSaldo(cliente);
+                clienteDAO.inserirSaldo(cliente, metodoDePagamento);
                 carregarTableViewCliente();
             }
         }else{
