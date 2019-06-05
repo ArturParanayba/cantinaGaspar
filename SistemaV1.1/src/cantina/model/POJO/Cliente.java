@@ -6,9 +6,10 @@ public class Cliente implements Serializable {
 
     private int codCliente;
     private String nome;
-    public String email;
-    public double saldo;
-    public String metodoDePagamento;
+    private String email;
+    private double saldo;
+    private String metodoDePagamento;
+    private double valorDepositoCredito;
 
     public Cliente(){
     }
@@ -59,6 +60,14 @@ public class Cliente implements Serializable {
 
     public void setMetodoDePagamento(String metodoDePagamento) {
         this.metodoDePagamento = metodoDePagamento;
+    }
+    
+        public double getValorDeDepositoCredito() {
+        return valorDepositoCredito;
+    }
+
+    public void setValorDepositoCredito(double valorDepositoCredito) {
+        this.valorDepositoCredito = valorDepositoCredito;
     }
     
 

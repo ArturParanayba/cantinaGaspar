@@ -7,6 +7,7 @@ package cantina.controller;
 
 import cantina.model.POJO.Cliente;
 
+
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -57,7 +58,6 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     public Stage dialogStage;
     public boolean btnAddCreditoClicked = false;
     public Cliente cliente;
-    // private final MetodoDePagamento metodoDePagamento = new MetodoDePagamento();
 
     ObservableList<String> mtdDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência");
 
@@ -65,6 +65,7 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     public void initialize(URL url, ResourceBundle rb) {
 
         comboBoxMtdPagamento.setItems(mtdDePagamento);
+       
 
     }
 
@@ -87,20 +88,30 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     public Cliente getCliente() {
         return cliente;
     }
+    
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
         this.labelNomeClienteCrd.setText(cliente.getNome());
-        this.labelSaldoAtual.setText(Double.toString(cliente.getSaldo()).replace(".", ","));
-
+        this.labelSaldoAtual.setText(Double.toString(cliente.getSaldo()));
+        
+        double valor = Double.valueOf(labelSaldoAtual.getText());
+        if (valor < 0) {
+            labelSaldoAtual.setTextFill(Color.RED);
+        } else if (valor > 0) {
+            labelSaldoAtual.setTextFill(Color.GREEN);
+        }
+        labelSaldoAtual.setText("R$ " + Double.toString(cliente.getSaldo()).replace(".", ","));
     }
+    
 
     @FXML
     public void btnCalcular() {
         try {
+            
             //Logica da adição do crédito
             double deposito = Double.valueOf(textFieldValorDepositado.getText().replaceAll(",", "."));
-            double valorAtual = Double.valueOf(labelSaldoAtual.getText().replace(",", "."));
+            double valorAtual = Double.valueOf(labelSaldoAtual.getText().replace(",", ".").replace("R$ ",""));
             double valorNovoSaldo = deposito + valorAtual;
 
             NumberFormat nf = NumberFormat.getNumberInstance();
@@ -110,7 +121,7 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
 
             if (textFieldValorDepositado != null) {
  
-                labelValorAposDeposito.setText((SaldoEmReal));
+                labelValorAposDeposito.setText("R$ " + (SaldoEmReal));
         
                 if (valorNovoSaldo < 0) {
                     labelValorAposDeposito.setTextFill(Color.RED);
@@ -133,13 +144,18 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     public void btnAddCredito() throws ParseException {
 
         try {
-            double saldoDepositado = Double.parseDouble(labelValorAposDeposito.getText().replace(",", "."));
-            cliente.setSaldo(saldoDepositado);
-
-            //pega a string do método de pagamento
+            double saldoAposDeposito = Double.parseDouble(labelValorAposDeposito.getText().replace(",", ".").replace("R$ ", ""));
+            double valorDeposito = Double.parseDouble(textFieldValorDepositado.getText().replace(",", ".").replace("R$ ", ""));
+            
+            //seta o valor novo saldo
+            cliente.setSaldo(saldoAposDeposito); 
+            //seta o valor do deposito
+            cliente.setValorDepositoCredito(valorDeposito);
+            //seta a string do método de pagamento
             String metodo = comboBoxMtdPagamento.getSelectionModel().getSelectedItem();
-            System.out.println(cliente.getMetodoDePagamento());
+            //seta o metodo de pagamento
             cliente.setMetodoDePagamento(metodo);
+   
             btnAddCreditoClicked = true;
             dialogStage.close();
 

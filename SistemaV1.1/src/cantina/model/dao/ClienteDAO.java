@@ -45,22 +45,6 @@ public class ClienteDAO {
         }
     }
 
-    public boolean alterarNomeCliente(Cliente cliente) {
-        //alterar nome da tabela de clientes de acordo com o banco!
-        String sql = "UPDATE cliente SET nome=? WHERE codCliente=?";
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getEmail());
-            stmt.setInt(3, cliente.getCodCliente());
-            stmt.execute();
-            return true;
-        } catch (SQLException ex) {
-            System.out.println("Erro ao alterar Cliente. Verificar SQL");
-            ex.printStackTrace();
-            return false;
-        }
-    }
 
     public boolean alterar(Cliente cliente) {
         //alterar nome da tabela de clientes de acordo com o banco!
@@ -140,12 +124,12 @@ public class ClienteDAO {
     }
 
     //Verificar como colocar o metodo de pagamento
-    public boolean inserirSaldo(Cliente cliente /*MetodoDePagamento metodoDePagamento */) {
+    public boolean inserirSaldo(Cliente cliente) {
         //pega a data do dia   
         java.util.Date uDate = new java.util.Date();
-        //System.out.println("Time in java.util.Date is : " + uDate);
+
         java.sql.Date sDate = convertUtilToSql(uDate);
-        //System.out.println("Time in java.sql.Date is : " + sDate);
+
 
         // formata de String para Date
         System.out.println(cliente.getMetodoDePagamento() + "   DAO");
@@ -155,7 +139,7 @@ public class ClienteDAO {
             PreparedStatement insertStmt = connection.prepareStatement(insert);
             insertStmt.setString(1, cliente.getMetodoDePagamento());
             insertStmt.setDate(2, (sDate));
-            insertStmt.setDouble(3, (cliente.getSaldo()));
+            insertStmt.setDouble(3, (cliente.getValorDeDepositoCredito()));
             insertStmt.setInt(4, cliente.getCodCliente());
 
             insertStmt.execute();
@@ -178,17 +162,11 @@ public class ClienteDAO {
         } catch (SQLException ex) {
             System.err.println("Erro ao inserir Saldo. Verificar SQL");
             ex.printStackTrace();
-            
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Ops!");
-//            alert.setHeaderText("Por favor, selecione o método de pagamento desta operação.");
-//            alert.show();
-//            
+                   
             
             return false;
         }
 
-        // return false;
     }
 
     //CONVERSOR DE DATA JAVA.UTIL.DATE PARA JAVA.SQL.DATE
