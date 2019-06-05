@@ -54,7 +54,7 @@ public class ProdutoDAO {
     }
 
     public boolean remover(Produto produto) {
-        String sql = "DELETE FROM produtos WHERE codCliente=?";
+        String sql = "DELETE FROM produtos WHERE codproduto=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, produto.getCodProduto());
@@ -78,11 +78,12 @@ public class ProdutoDAO {
                 produto.setNome(resultado.getString("nome"));
                 produto.setPreco(resultado.getDouble("preco"));
                 produto.setQuantidade(resultado.getInt("quantidade"));
-                
+                retorno.add(produto);
                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao listar Produtos. Verificar SQL");
+            ex.printStackTrace();
         }
         return retorno;
     }
