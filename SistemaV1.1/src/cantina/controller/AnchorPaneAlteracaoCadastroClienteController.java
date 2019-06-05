@@ -46,7 +46,7 @@ public class AnchorPaneAlteracaoCadastroClienteController implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
     public Stage getDialogStage() {
         return dialogStage;
@@ -73,18 +73,20 @@ public class AnchorPaneAlteracaoCadastroClienteController implements Initializab
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-        this.textFieldClienteNome.setText(cliente.getNome());
-        this.textFieldClienteEmail.setText(cliente.getEmail());
+       this.textFieldClienteNome.setText(cliente.getNome());
+       this.textFieldClienteEmail.setText(cliente.getEmail());
          
     }
     
     @FXML
     public void btnConfirmar(){
-           
+      
+        //System.out.println(cliente.getNome());
         cliente.setNome(textFieldClienteNome.getText());
         cliente.setEmail(textFieldClienteEmail.getText());
         btnConfirmarClicked = true;
         dialogStage.close();
+
         
     }
     

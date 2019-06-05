@@ -1,8 +1,7 @@
-
 package cantina.controller;
 
 import cantina.model.POJO.Cliente;
-import cantina.model.POJO.MetodoDePagamento;
+
 import cantina.model.dao.ClienteDAO;
 import cantina.model.database.Database;
 import cantina.model.database.DatabaseFactory;
@@ -29,8 +28,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
-
 /**
  * FXML Controller class
  *
@@ -42,10 +39,10 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
     private TableView<Cliente> tableViewClientes;
 
     @FXML
-    private TableColumn<Cliente,String> tableColumnClienteNome;
+    private TableColumn<Cliente, String> tableColumnClienteNome;
 
     @FXML
-    private TableColumn<Cliente,Float> tableColumnClienteSaldo;
+    private TableColumn<Cliente, Float> tableColumnClienteSaldo;
 
     @FXML
     private Label labelClienteCodigo;
@@ -64,84 +61,66 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
 
     @FXML
     private Button btnAlterar;
-    
+
     @FXML
     private Button btnRemover;
-    
+
     @FXML
     private Button btnCredito;
-    
+
     private List<Cliente> listClientes;
     private ObservableList<Cliente> observableListClientes;
     
+
     //manipulação de dados do banco
     private final Database database = DatabaseFactory.getDatabase("postgresql");
     private final Connection connection = database.conectar();
     private final ClienteDAO clienteDAO = new ClienteDAO();
-    
-            
-    @Override        
+
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         clienteDAO.setConnection(connection);
         carregarTableViewCliente();
-        
+
         //Listener acionado quando é selecionado o cliente na tableView
         tableViewClientes.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> selecionaCliente(newValue)
         );
-    }   
-    
+    }
+
     //carrega os dados do cliente na tabela
-    public void carregarTableViewCliente(){
+    public void carregarTableViewCliente() {
         tableColumnClienteSaldo.setCellValueFactory(new PropertyValueFactory<>("saldo"));
         tableColumnClienteNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-    
+
         listClientes = clienteDAO.listar();
-        
+
         observableListClientes = FXCollections.observableArrayList(listClientes);
-        
+
         tableViewClientes.setItems(observableListClientes);
     }
-    
-    public void selecionaCliente(Cliente cliente){
-        
+
+    public void selecionaCliente(Cliente cliente) {
+
         //condição para deixar tela em branco caso nada esteja selecionado
-        if(cliente !=null){
-        labelClienteCodigo.setText(String.valueOf(cliente.getCodCliente()));
-        labelClienteNome.setText(cliente.getNome());
-        labelClienteEmail.setText(cliente.getEmail());
-        labelClienteSaldo.setText(Double.toString(cliente.getSaldo()));    
+        if (cliente != null) {
+            labelClienteCodigo.setText(String.valueOf(cliente.getCodCliente()));
+            labelClienteNome.setText(cliente.getNome());
+            labelClienteEmail.setText(cliente.getEmail());
+            labelClienteSaldo.setText(Double.toString(cliente.getSaldo()));
         } else {
-        labelClienteCodigo.setText("");
-        labelClienteNome.setText("");
-        labelClienteEmail.setText("");
-        labelClienteSaldo.setText("");
+            labelClienteCodigo.setText("");
+            labelClienteNome.setText("");
+            labelClienteEmail.setText("");
+            labelClienteSaldo.setText("");
         }
     }
-    
-    public void alterarCredito() throws IOException{
-        Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
-          
-        if(cliente != null){
-            boolean btnConfirmarClicked = showAnchorPaneCadastroDeClientesController(cliente);
-            if(btnConfirmarClicked) {
-                clienteDAO.alterar(cliente);
-                carregarTableViewCliente();
-            }
-        }else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ops!");
-            alert.setHeaderText("Por favor, selecione um cliente na tabela.");
-            alert.show();
-        }
-        
-    }
-    
+
     @FXML
-    public void btnInserir() throws IOException{
+    public void btnInserir() throws IOException {
         Cliente cliente = new Cliente();
-        boolean btnConfirmarClicked = showAnchorPaneCadastroDeClientesController(cliente);
-        if(btnConfirmarClicked) {
+        boolean btnConfirmarClicked = showAnchorPaneCadastroDeClientesDialog(cliente);
+        if (btnConfirmarClicked) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmação de Inserção");
             alert.setHeaderText("Sucesso!");
@@ -153,38 +132,39 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
     }
 
     @FXML
-    public void btnAlterar() throws IOException{
+    public void btnAlterar() throws IOException {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
-        if(cliente != null){
-            boolean btnConfirmarClicked = showAnchorPaneAlteracaoCadastroClienteController(cliente);
-            if(btnConfirmarClicked) {
+        if (cliente != null) {
+            boolean btnConfirmarClicked = showAnchorPaneAlteracaoCadastroClienteDialog(cliente);
+            if (btnConfirmarClicked) {
                 clienteDAO.alterar(cliente);
                 carregarTableViewCliente();
             }
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ops!");
             alert.setHeaderText("Por favor, selecione um cliente na tabela.");
             alert.show();
         }
     }
-    
-    public void btnRemover() throws IOException{
+
+    @FXML
+    public void btnRemover() throws IOException {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
-        if(cliente !=null) {
+        if (cliente != null) {
             Alert alert = new Alert(Alert.AlertType.WARNING,
-            "Você realmente deseja remover este cliente? Esta é IRREVERSÍVEL!",
+                    "Você realmente deseja remover este cliente? Esta é IRREVERSÍVEL!",
                     ButtonType.YES, ButtonType.NO);
             alert.setTitle("Confirmação de Remoção");
             alert.setHeaderText("Atenção!");
-            
-            Optional <ButtonType> resultado = alert.showAndWait();
-            
-                if(resultado.get() == ButtonType.YES){
-                    clienteDAO.remover(cliente);
-                    carregarTableViewCliente();
-                } 
-            
+
+            Optional<ButtonType> resultado = alert.showAndWait();
+
+            if (resultado.get() == ButtonType.YES) {
+                clienteDAO.remover(cliente);
+                carregarTableViewCliente();
+            }
+
             //carregarTableViewCliente();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -192,41 +172,40 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
             alert.setHeaderText("Por favor, selecione um cliente na tabela.");
             alert.show();
         }
-    }    
-    
+    }
+
+    @FXML
     public void btnCredito() throws IOException {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
-        MetodoDePagamento metodoDePagamento = new MetodoDePagamento();
-        if(cliente != null){
-            boolean btnAddCreditoClicked = showAnchorPaneAlteracaoDeCreditoClienteController(cliente);   
-            if(btnAddCreditoClicked) {
-                clienteDAO.inserirSaldo(cliente, metodoDePagamento);
+        //MetodoDePagamento metodoDePagamento1 = new MetodoDePagamento();
+        if (cliente != null) {
+            boolean btnAddCreditoClicked = showAnchorPaneAlteracaoDeCreditoClienteController(cliente);
+            if (btnAddCreditoClicked) {
+                clienteDAO.inserirSaldo(cliente);
                 carregarTableViewCliente();
             }
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ops!");
             alert.setHeaderText("Por favor, selecione um cliente na tabela.");
             alert.show();
-            
-        }
-        
-    }
-    
-    //ALTERAÇÃO DO CRÉDITO
-    public boolean showAnchorPaneAlteracaoDeCreditoClienteController(Cliente cliente) throws IOException{
-       //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
-       FXMLLoader loader = new FXMLLoader();
-       loader.setLocation(AnchorPaneAlteracaoDeCreditoClienteController.class.getResource("/cantina/view/AnchorPaneAlteracaoDeCreditoCliente.fxml"));
-       AnchorPane page = (AnchorPane) loader.load();
 
+        }
+
+    }
+
+    //ALTERAÇÃO DO CRÉDITO
+    public boolean showAnchorPaneAlteracaoDeCreditoClienteController(Cliente cliente) throws IOException {
+        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AnchorPaneAlteracaoDeCreditoClienteController.class.getResource("/cantina/view/AnchorPaneAlteracaoDeCreditoCliente.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
 
         // Criando um Estágio de Diálogo (Stage Dialog)
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Operação de Crédito");
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
-
 
         //Setando o cliente no controller
         AnchorPaneAlteracaoDeCreditoClienteController controller = loader.getController();
@@ -237,22 +216,21 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         dialogStage.showAndWait();
 
         return controller.isBtnAddCreditoClicked();
-        
+
     }
-    //CRIAÇÃO de um novo cadastro de cliente
-    public boolean showAnchorPaneCadastroDeClientesController(Cliente cliente) throws IOException {
+
+    // INSERIR CADASTRO CLIENTE
+    public boolean showAnchorPaneCadastroDeClientesDialog(Cliente cliente) throws IOException {
         //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
-       FXMLLoader loader = new FXMLLoader();
-       loader.setLocation(AnchorPaneCadastroDeClientesController.class.getResource("/cantina/view/AnchorPaneCadastroDeClientes.fxml"));
-       AnchorPane page = (AnchorPane) loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AnchorPaneCadastroDeClientesController.class.getResource("/cantina/view/AnchorPaneCadastroDeClientes.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
 
-
-       // Criando um Estágio de Diálogo (Stage Dialog)
+        // Criando um Estágio de Diálogo (Stage Dialog)
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Cadastro de Clientes");
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
-
 
         //Setando o cliente no controller
         AnchorPaneCadastroDeClientesController controller = loader.getController();
@@ -265,20 +243,19 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         return controller.isBtnConfirmarClicked();
 
     }
-        //ALTERAÇÃO do cadastro do cliente
-    public boolean showAnchorPaneAlteracaoCadastroClienteController(Cliente cliente) throws IOException {
+    //ALTERAÇÃO CADASTRO CLIENTE
+
+    public boolean showAnchorPaneAlteracaoCadastroClienteDialog(Cliente cliente) throws IOException {
         //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
-       FXMLLoader loader = new FXMLLoader();
-       loader.setLocation(AnchorPaneAlteracaoCadastroClienteController.class.getResource("/cantina/view/AnchorPaneAlteracaoCadastroCliente.fxml"));
-       AnchorPane page = (AnchorPane) loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AnchorPaneAlteracaoCadastroClienteController.class.getResource("/cantina/view/AnchorPaneAlteracaoCadastroCliente.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
 
-
-       // Criando um Estágio de Diálogo (Stage Dialog)
+        // Criando um Estágio de Diálogo (Stage Dialog)
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Alteração de Cadastro");
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
-
 
         //Setando o cliente no controller
         AnchorPaneAlteracaoCadastroClienteController controller = loader.getController();
@@ -291,9 +268,3 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         return controller.isBtnConfirmarClicked();
     }
 }
-    
-
-
-
-
-    

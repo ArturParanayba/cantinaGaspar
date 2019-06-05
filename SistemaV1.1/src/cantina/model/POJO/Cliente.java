@@ -8,7 +8,7 @@ public class Cliente implements Serializable {
     private String nome;
     public String email;
     public double saldo;
-    
+    public String metodoDePagamento;
 
     public Cliente(){
     }
@@ -53,14 +53,21 @@ public class Cliente implements Serializable {
         this.saldo = saldo;
     }
 
-    public void vendaComSaldo(double saldo){
-        
+        public String getMetodoDePagamento() {
+        return metodoDePagamento;
     }
+
+    public void setMetodoDePagamento(String metodoDePagamento) {
+        this.metodoDePagamento = metodoDePagamento;
+    }
+    
 
     @Override
     public String toString() {
         return this.nome;
     }
+
+
 
        
 }

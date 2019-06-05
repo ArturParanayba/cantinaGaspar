@@ -6,10 +6,8 @@
 package cantina.controller;
 
 import cantina.model.POJO.Cliente;
-import cantina.model.POJO.MetodoDePagamento;
 
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ResourceBundle;
@@ -24,9 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import java.util.Currency;
-import java.util.Locale;
-
 
 /**
  * FXML Controller class
@@ -34,8 +29,6 @@ import java.util.Locale;
  * @author artur-paranayba
  */
 public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializable {
-
-
 
     @FXML
     private Label labelNomeClienteCrd;
@@ -48,55 +41,45 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
 
     @FXML
     private TextField textFieldValorDepositado;
-            
+
     @FXML
-    private ComboBox comboBoxMtdPagamento;
+    private ComboBox<String> comboBoxMtdPagamento;
 
     @FXML
     private Button btnAddCredito;
 
     @FXML
     private Button btnCancelar;
-        
+
     @FXML
     private Button btnCalcular;
-    
-    
-    
+
     public Stage dialogStage;
     public boolean btnAddCreditoClicked = false;
     public Cliente cliente;
-    public MetodoDePagamento metodoDePagamento;
-    
-   ObservableList<String> mtdDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência");   
-    
+    // private final MetodoDePagamento metodoDePagamento = new MetodoDePagamento();
+
+    ObservableList<String> mtdDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência");
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      
-        //comboBoxMtdPagamento.setValue("Selecione");
+
         comboBoxMtdPagamento.setItems(mtdDePagamento);
-        /*comboBoxMtdPagamento.getItems().add(1, "Cartão");
-        comboBoxMtdPagamento.getItems().add(2, "Dinheiro");
-        comboBoxMtdPagamento.getItems().add(3, "Transferencia"); */
-    }    
-    
-   
-    
+
+    }
+
     public Stage getDialogStage() {
         return dialogStage;
     }
 
-    
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
-    
     public boolean isBtnAddCreditoClicked() {
         return btnAddCreditoClicked;
     }
 
-   
     public void setBtnAddCreditoClicked(boolean btnAddCreditoClicked) {
         this.btnAddCreditoClicked = btnAddCreditoClicked;
     }
@@ -109,69 +92,70 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
         this.cliente = cliente;
         this.labelNomeClienteCrd.setText(cliente.getNome());
         this.labelSaldoAtual.setText(Double.toString(cliente.getSaldo()).replace(".", ","));
-        
+
     }
-   
+
     @FXML
-    public void btnCalcular(){
-        
-        //Logica da adição do crédito
-        double deposito = Double.valueOf(textFieldValorDepositado.getText().replaceAll(",","."));
-        double valorAtual = Double.valueOf(labelSaldoAtual.getText().replace(",", "."));
-        double valorNovoSaldo = deposito + valorAtual;
-        //String cbox = comboBoxMtdPagamento.getValue().toString();
-        
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        nf.setGroupingUsed(true);
-        nf.setMinimumFractionDigits(2);
-        String SaldoEmReal = nf.format(valorNovoSaldo); 
+    public void btnCalcular() {
+        try {
+            //Logica da adição do crédito
+            double deposito = Double.valueOf(textFieldValorDepositado.getText().replaceAll(",", "."));
+            double valorAtual = Double.valueOf(labelSaldoAtual.getText().replace(",", "."));
+            double valorNovoSaldo = deposito + valorAtual;
 
+            NumberFormat nf = NumberFormat.getNumberInstance();
+            nf.setGroupingUsed(true);
+            nf.setMinimumFractionDigits(2);
+            String SaldoEmReal = nf.format(valorNovoSaldo);
 
+            if (textFieldValorDepositado != null) {
+ 
+                labelValorAposDeposito.setText((SaldoEmReal));
         
-                if (textFieldValorDepositado != null){
-                    //esta linha coloca o valor em R$ com virgula
-                    labelValorAposDeposito.setText((SaldoEmReal));
-                    //labelValorAposDeposito.setText(Double.toString(valorNovoSaldo));         
-                        if(valorNovoSaldo < 0){
-                            labelValorAposDeposito.setTextFill(Color.RED);
-                        } else if (valorNovoSaldo > 0){
-                            labelValorAposDeposito.setTextFill(Color.GREEN); 
-                        }              
-                }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Ops!");
-                alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
-                alert.show();
+                if (valorNovoSaldo < 0) {
+                    labelValorAposDeposito.setTextFill(Color.RED);
+                } else if (valorNovoSaldo > 0) {
+                    labelValorAposDeposito.setTextFill(Color.GREEN);
                 }
-            
-                
+            }
+
+        } catch (NumberFormatException ex) {
+            labelValorAposDeposito.setText(null);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ops!");
+            alert.setHeaderText("Por favor, digite um valor para realizar o cálculo.");
+            alert.show();
+        }
+
     }
-     
-    
+
     @FXML
-    public void btnAddCredito() throws ParseException{
-        
-    //coloca valor para double   
-    double saldoDepositado =   Double.parseDouble(labelValorAposDeposito.getText().replace(",", "."));
-    cliente.setSaldo(saldoDepositado);
-    
-    //pega a string do método de pagamento
-   //String metodo = comboBoxMtdPagamento.getSelectionModel().getSelectedItem().toString();
-        System.out.println(comboBoxMtdPagamento.getValue().toString());    
-    metodoDePagamento.setMetodoDePagamento(comboBoxMtdPagamento.getValue().toString());
-    
-    btnAddCreditoClicked = true;
-    dialogStage.close();
-    //carregarTableViewCliente();
+    public void btnAddCredito() throws ParseException {
+
+        try {
+            double saldoDepositado = Double.parseDouble(labelValorAposDeposito.getText().replace(",", "."));
+            cliente.setSaldo(saldoDepositado);
+
+            //pega a string do método de pagamento
+            String metodo = comboBoxMtdPagamento.getSelectionModel().getSelectedItem();
+            System.out.println(cliente.getMetodoDePagamento());
+            cliente.setMetodoDePagamento(metodo);
+            btnAddCreditoClicked = true;
+            dialogStage.close();
+
+        } catch (NullPointerException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ops!");
+            alert.setHeaderText("Por favor, selecione o método de pagamento desta operação.");
+            alert.show();
+            ex.printStackTrace();
+        }
     }
-    
+
     @FXML
-    public void btnCancelar(){
-        
+    public void btnCancelar() {
+
         dialogStage.close();
     }
-    
 
 }
-    
-
