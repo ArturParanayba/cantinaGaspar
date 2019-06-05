@@ -42,7 +42,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
     private TableColumn<Cliente, String> tableColumnClienteNome;
 
     @FXML
-    private TableColumn<Cliente, Float> tableColumnClienteSaldo;
+    private TableColumn<Cliente, Double> tableColumnClienteSaldo;
 
     @FXML
     private Label labelClienteCodigo;
@@ -70,6 +70,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
 
     private List<Cliente> listClientes;
     private ObservableList<Cliente> observableListClientes;
+  
     
 
     //manipulação de dados do banco
@@ -122,9 +123,9 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         boolean btnConfirmarClicked = showAnchorPaneCadastroDeClientesDialog(cliente);
         if (btnConfirmarClicked) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Confirmação de Inserção");
+            alert.setTitle("Sucesso no Cadastro");
             alert.setHeaderText("Sucesso!");
-            alert.setContentText("Cliente cadastrado.");
+            alert.setContentText(cliente.getNome() + " cadastrado(a)!");
             alert.show();
             clienteDAO.inserir(cliente);
             carregarTableViewCliente();
@@ -153,7 +154,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
         if (cliente != null) {
             Alert alert = new Alert(Alert.AlertType.WARNING,
-                    "Você realmente deseja remover este cliente? Esta é IRREVERSÍVEL!",
+                    "Você realmente deseja remover "+ cliente.getNome() +" ? Esta é IRREVERSÍVEL!",
                     ButtonType.YES, ButtonType.NO);
             alert.setTitle("Confirmação de Remoção");
             alert.setHeaderText("Atenção!");
@@ -177,12 +178,16 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
     @FXML
     public void btnCredito() throws IOException {
         Cliente cliente = tableViewClientes.getSelectionModel().getSelectedItem();
-        //MetodoDePagamento metodoDePagamento1 = new MetodoDePagamento();
+        //InsercaoDeCredito insercaoDeCredito = new InsercaoDeCredito();
         if (cliente != null) {
             boolean btnAddCreditoClicked = showAnchorPaneAlteracaoDeCreditoClienteController(cliente);
             if (btnAddCreditoClicked) {
                 clienteDAO.inserirSaldo(cliente);
                 carregarTableViewCliente();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sucesso!");
+            alert.setHeaderText("Depósito de crédito de " + cliente.getNome() + "\nno valor de: R$" + cliente.getValorDeDepositoCredito() + " foi realizado com sucesso!");
+            alert.show();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -260,7 +265,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
         //Setando o cliente no controller
         AnchorPaneAlteracaoCadastroClienteController controller = loader.getController();
         controller.setDialogStage(dialogStage);
-        //controller.setCliente(cliente);
+        controller.setCliente(cliente);
 
         //Monstra o Dialog e espera até que o usuario feche
         dialogStage.showAndWait();
