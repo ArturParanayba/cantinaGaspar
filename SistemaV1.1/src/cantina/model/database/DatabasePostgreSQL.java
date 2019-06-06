@@ -14,7 +14,7 @@ public class DatabasePostgreSQL implements Database {
     public Connection conectar() {
         try {
            Class.forName("org.postgresql.Driver");
-            this.connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/cantinadb", "postgres","1234");
+            this.connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5433/cantinadbteste", "postgres","1234");
             return this.connection;
         } catch (ClassNotFoundException e) {
             System.out.println("Conexão falha por falta da biblioteca.");

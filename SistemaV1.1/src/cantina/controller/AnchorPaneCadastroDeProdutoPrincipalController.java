@@ -111,35 +111,35 @@ public class AnchorPaneCadastroDeProdutoPrincipalController implements Initializ
     }
 
     
-//        public void btnInserir() throws IOException {
-//        Produto produto = new Produto();
-//        boolean btnConfirmarClicked = showAnchorPaneCadastroDeProdutoDialog(produto);
-//        if (btnConfirmarClicked) {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Sucesso no Cadastro");
-//            alert.setHeaderText("Sucesso!");
-//            alert.setContentText(produto.getNome() + " cadastrado(a)!");
-//            alert.show();
-//            produtoDAO.inserir(produto);
-//            carregarTableViewProduto();
-//        }
-//    }
+        public void btnInserir() throws IOException {
+        Produto produto = new Produto();
+        boolean btnConfirmarClicked = showAnchorPaneCadastroDeProdutoDialog(produto);
+        if (btnConfirmarClicked) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sucesso no Cadastro");
+            alert.setHeaderText("Sucesso!");
+            alert.setContentText(produto.getNome() + " cadastrado(a)!");
+            alert.show();
+            produtoDAO.inserir(produto);
+            carregarTableViewProduto();
+        }
+    }
         
-//        public void btnAlterar() throws IOException {
-//        Produto produto = tableViewProdutos.getSelectionModel().getSelectedItem();
-//            if (produto != null) {
-//                boolean btnConfirmarClicked = showAnchorPaneAlteracaoCadastroProdutoDialog(produto);
-//                if (btnConfirmarClicked) {
-//                    produtoDAO.alterar(produto);
-//                    carregarTableViewProduto();
-//                }
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Ops!");
-//                alert.setHeaderText("Por favor, selecione um produto na tabela.");
-//                alert.show();
-//            }
-//        }
+        public void btnAlterar() throws IOException {
+        Produto produto = tableViewProdutos.getSelectionModel().getSelectedItem();
+            if (produto != null) {
+                boolean btnConfirmarClicked = showAnchorPaneAlteracaoDeProdutoDialog(produto);
+                if (btnConfirmarClicked) {
+                    produtoDAO.alterar(produto);
+                    carregarTableViewProduto();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Ops!");
+                alert.setHeaderText("Por favor, selecione um produto na tabela.");
+                alert.show();
+            }
+        }
         
         public void btnRemover() throws IOException {
         Produto produto = tableViewProdutos.getSelectionModel().getSelectedItem();
@@ -157,7 +157,7 @@ public class AnchorPaneCadastroDeProdutoPrincipalController implements Initializ
                 carregarTableViewProduto();
             }
 
-            //carregarTableViewCliente();
+            carregarTableViewProduto();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ops!");
@@ -165,53 +165,54 @@ public class AnchorPaneCadastroDeProdutoPrincipalController implements Initializ
             alert.show();
         }
     }
-}
+
        
-//    
-//      public boolean showAnchorPaneCadastroDeProdutoDialog(Produto produto) throws IOException {
-//        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(AnchorPaneCadastroProdutoController.class.getResource("/cantina/view/ "));
-//        AnchorPane page = (AnchorPane) loader.load();
-//
-//        // Criando um Estágio de Diálogo (Stage Dialog)
-//        Stage dialogStage = new Stage();
-//        dialogStage.setTitle("Cadastro de Produtos");
-//        Scene scene = new Scene(page);
-//        dialogStage.setScene(scene);
-//
-//        //Setando o cliente no controller
-//        AnchorPaneCadastroProdutoController controller = loader.getController();
-//        controller.setDialogStage(dialogStage);
-//        controller.setProduto(produto);
-//
-//        //Monstra o Dialog e espera até que o usuario feche
-//        dialogStage.showAndWait();
-//
-//        return controller.isBtnConfirmarClicked();
-//
-//    }      
-//        
-//       public boolean showAnchorPaneAlteracaoCadastroProdutoDialog(Produto produto) throws IOException {
-//        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(AnchorPaneAlteracaoProdutoController.class.getResource("/cantina/view/ "));
-//        AnchorPane page = (AnchorPane) loader.load();
-//
-//        // Criando um Estágio de Diálogo (Stage Dialog)
-//        Stage dialogStage = new Stage();
-//        dialogStage.setTitle("Alterar Produto");
-//        Scene scene = new Scene(page);
-//        dialogStage.setScene(scene);
-//
-//        //Setando o cliente no controller
-//        AnchorPaneAlteracaoProdutoController controller = loader.getController();
-//        controller.setDialogStage(dialogStage);
-//        controller.setProduto(produto);
-//
-//        //Monstra o Dialog e espera até que o usuario feche
-//        dialogStage.showAndWait();
-//
-//        return controller.isBtnAddCreditoClicked();
-//
-//    }
+    
+      public boolean showAnchorPaneCadastroDeProdutoDialog(Produto produto) throws IOException {
+        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AnchorPaneCadastroDeProdutoController.class.getResource("/cantina/view/AnchorPaneCadastroDeProduto.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
+
+        // Criando um Estágio de Diálogo (Stage Dialog)
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Cadastro de Produtos");
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        //Setando o cliente no controller
+        AnchorPaneCadastroDeProdutoController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        controller.setProduto(produto);
+
+        //Monstra o Dialog e espera até que o usuario feche
+        dialogStage.showAndWait();
+
+        return controller.isBtnConfirmarClicked();
+
+    }      
+        
+       public boolean showAnchorPaneAlteracaoDeProdutoDialog(Produto produto) throws IOException {
+        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(AnchorPaneAlteracaoDeProdutoController.class.getResource("/cantina/view/AnchorPaneAlteracaoDeProduto.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
+
+        // Criando um Estágio de Diálogo (Stage Dialog)
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Alterar Produto");
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        //Setando o cliente no controller
+        AnchorPaneAlteracaoDeProdutoController controller = loader.getController();
+        controller.setDialogStage(dialogStage);
+        controller.setProduto(produto);
+
+        //Monstra o Dialog e espera até que o usuario feche
+        dialogStage.showAndWait();
+
+        return controller.isBtnConfirmarClicked();
+
+    }
+}

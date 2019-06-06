@@ -32,23 +32,23 @@ public class ProdutoDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao Inserir Produto. Verificar SQL");
             return false;
         }
     }
 
     public boolean alterar(Produto produto) {
-        String sql = "UPDATE produtos SET nome=?, preco=?, quantidade=? WHERE codProduto=?";
+        String sql = "UPDATE produtos SET nome=?, preco=? WHERE codProduto=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
-            stmt.setInt(3, produto.getQuantidade());
-            stmt.setInt(5, produto.getCodProduto());
+            //stmt.setInt(3, produto.getQuantidade());
+            stmt.setInt(3, produto.getCodProduto());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao Alterar Produto. Verificar SQL");
             return false;
         }
     }
