@@ -67,6 +67,9 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
 
     @FXML
     private Button btnCredito;
+    
+    @FXML
+    private Button btnMenuPrincipal;
 
     private List<Cliente> listClientes;
     private ObservableList<Cliente> observableListClientes;
@@ -197,6 +200,12 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
 
         }
 
+    }
+    
+    public void btnMenuPrincipal() throws IOException{
+        Stage stage = (Stage) btnMenuPrincipal.getScene().getWindow(); 
+        stage.close(); 
+        
     }
 
     //ALTERAÇÃO DO CRÉDITO
