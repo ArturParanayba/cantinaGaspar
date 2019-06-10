@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 
@@ -26,11 +28,47 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
     @FXML
     private AnchorPane anchorPane;
     
+    @FXML
+    private Button btnConsultarProdutos;
+
+    @FXML
+    private Button btnConsultarVendas;
+
+    @FXML
+    private Button btnRealizarVenda;
+
+    @FXML
+    private Label labelVendasRealizadas;
+
+    @FXML
+    private Label qtdVendasRealizadas;
+
+    @FXML
+    private Label labelValorVendasRealizadas;
+
+    @FXML
+    private Label qtdValorVendasRealizadas;
+
+    @FXML
+    private Label labelClientesSaldoNegativo;
+
+    @FXML
+    private Label qtdClientesSaldoNegativo;
+
+    @FXML
+    private Label labelValorSaldoNegativo;
+
+    @FXML
+    private Label qtdSaldoNegativo;
+    
+    boolean btnMenuPrincipalClicked = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }   
+    
+    
     
     public void abrirTelaCadastroCliente() throws IOException{
             AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastrosDeClientesPrincipal.fxml"));
