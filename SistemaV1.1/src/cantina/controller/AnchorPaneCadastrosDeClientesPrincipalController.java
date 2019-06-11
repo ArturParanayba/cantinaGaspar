@@ -36,6 +36,9 @@ import javafx.stage.Stage;
 public class AnchorPaneCadastrosDeClientesPrincipalController implements Initializable {
 
     @FXML
+    private AnchorPane anchorPane;
+    
+    @FXML
     private TableView<Cliente> tableViewClientes;
 
     @FXML
@@ -111,7 +114,7 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
             labelClienteCodigo.setText(String.valueOf(cliente.getCodCliente()));
             labelClienteNome.setText(cliente.getNome());
             labelClienteEmail.setText(cliente.getEmail());
-            labelClienteSaldo.setText(Double.toString(cliente.getSaldo()));
+            labelClienteSaldo.setText(String.format("R$ " + "%.2f", cliente.getSaldo()));
         } else {
             labelClienteCodigo.setText("");
             labelClienteNome.setText("");
@@ -202,9 +205,10 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
 
     }
     
-    public void btnMenuPrincipal() throws IOException{
-        Stage stage = (Stage) btnMenuPrincipal.getScene().getWindow(); 
-        stage.close(); 
+    public void btnMenuPrincipal() throws IOException{    
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/VBoxTelaPrincipal.fxml"));
+        anchorPane.getChildren().setAll(a);
+    
         
     }
 
