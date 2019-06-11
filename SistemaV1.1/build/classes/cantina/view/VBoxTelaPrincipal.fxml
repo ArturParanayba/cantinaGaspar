@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="457.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cantina.controller.FXMLVBoxTelaPrincipalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cantina.controller.FXMLVBoxTelaPrincipalController">
    <children>
       <MenuBar>
         <menus>
@@ -22,7 +22,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Processos">
             <items>
-              <MenuItem fx:id="menuItemProcessosVendas" mnemonicParsing="false" text="Vendas" />
+              <MenuItem fx:id="menuItemProcessosVendas" mnemonicParsing="false" onAction="#abrirTelaCadastroDeVendas" text="Vendas" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Gráficos">
@@ -37,24 +37,24 @@
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorPane" prefHeight="468.0" prefWidth="705.0">
+      <AnchorPane fx:id="anchorPane" prefHeight="524.0" prefWidth="754.0">
          <children>
-            <Button fx:id="btnConsultarClientes" layoutX="87.0" layoutY="85.0" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" prefHeight="39.0" prefWidth="226.0" text="Consultar Clientes">
+            <Button fx:id="btnConsultarClientes" layoutX="89.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" prefHeight="39.0" prefWidth="226.0" text="Consultar Clientes">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnConsultarProdutos" layoutX="87.0" layoutY="146.0" mnemonicParsing="false" onAction="#abrirTelaCadastroDeProduto" prefHeight="39.0" prefWidth="226.0" text="Consultar Produtos">
+            <Button fx:id="btnConsultarProdutos" layoutX="89.0" layoutY="181.0" mnemonicParsing="false" onAction="#abrirTelaCadastroDeProduto" prefHeight="39.0" prefWidth="226.0" text="Consultar Produtos">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnConsultarVendas" layoutX="87.0" layoutY="206.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="226.0" text="Consultar Vendas">
+            <Button fx:id="btnConsultarVendas" layoutX="89.0" layoutY="241.0" mnemonicParsing="false" onAction="#abrirTelaCadastroDeVendas" prefHeight="39.0" prefWidth="226.0" text="Consultar Vendas">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnRealizarVenda" layoutX="87.0" layoutY="330.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="226.0" text="Realizar Venda" textFill="#16b22e">
+            <Button fx:id="btnRealizarVenda" layoutX="89.0" layoutY="365.0" mnemonicParsing="false" onAction="#abrirTelaInsercaoDeVendas" prefHeight="39.0" prefWidth="226.0" text="Realizar Venda" textFill="#16b22e">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
