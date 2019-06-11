@@ -36,7 +36,8 @@ public class ItemDeVendaDAO {
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ItemDeVendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao inserir item de venda");
+            ex.printStackTrace();
             return false;
         }
     }
@@ -46,14 +47,15 @@ public class ItemDeVendaDAO {
     }
 
     public boolean remover(ItemDeVenda itemDeVenda) {
-        String sql = "DELETE FROM itensDeVenda WHERE cdItemDeVenda=?";
+        String sql = "DELETE FROM itensDeVenda WHERE codItemDeVenda=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, itemDeVenda.getCdItemDeVenda());
+            stmt.setInt(1, itemDeVenda.getCodItemDeVenda());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(ItemDeVendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao remover Item de venda");
+            ex.printStackTrace();
             return false;
         }
     }
@@ -68,12 +70,12 @@ public class ItemDeVendaDAO {
                 ItemDeVenda itemDeVenda = new ItemDeVenda();
                 Produto produto = new Produto();
                 Venda venda = new Venda();
-                itemDeVenda.setCdItemDeVenda(resultado.getInt("cdItemDeVenda"));
+                itemDeVenda.setCodItemDeVenda(resultado.getInt("codItemDeVenda"));
                 itemDeVenda.setQuantidade(resultado.getInt("quantidade"));
                 itemDeVenda.setValor(resultado.getDouble("valor"));
                 
-                produto.setCodProduto(resultado.getInt("cdProduto"));
-                venda.setCodVenda(resultado.getInt("cdVenda"));
+                produto.setCodProduto(resultado.getInt("codProduto"));
+                venda.setCodVenda(resultado.getInt("codVenda"));
                 
                 //Obtendo os dados completos do Produto associado ao Item de Venda
                 ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -90,13 +92,14 @@ public class ItemDeVendaDAO {
                 retorno.add(itemDeVenda);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ItemDeVendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao listar itens de venda");
+            ex.printStackTrace();
         }
         return retorno;
     }
     
     public List<ItemDeVenda> listarPorVenda(Venda venda) {
-        String sql = "SELECT * FROM itensDeVenda WHERE cdVenda=?";
+        String sql = "SELECT * FROM itensDeVenda WHERE codVenda=?";
         List<ItemDeVenda> retorno = new ArrayList<>();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -106,12 +109,12 @@ public class ItemDeVendaDAO {
                 ItemDeVenda itemDeVenda = new ItemDeVenda();
                 Produto produto = new Produto();
                 Venda v = new Venda();
-                itemDeVenda.setCdItemDeVenda(resultado.getInt("cdItemDeVenda"));
+                itemDeVenda.setCodItemDeVenda(resultado.getInt("codItemDeVenda"));
                 itemDeVenda.setQuantidade(resultado.getInt("quantidade"));
                 itemDeVenda.setValor(resultado.getDouble("valor"));
                 
-                produto.setCodProduto(resultado.getInt("cdProduto"));
-                v.setCodVenda(resultado.getInt("cdVenda"));
+                produto.setCodProduto(resultado.getInt("codProduto"));
+                v.setCodVenda(resultado.getInt("codVenda"));
                 
                 //Obtendo os dados completos do Produto associado ao Item de Venda
                 ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -124,7 +127,8 @@ public class ItemDeVendaDAO {
                 retorno.add(itemDeVenda);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ItemDeVendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao listar por venda");
+            ex.printStackTrace();
         }
         return retorno;
     }
@@ -134,17 +138,17 @@ public class ItemDeVendaDAO {
         ItemDeVenda retorno = new ItemDeVenda();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1, itemDeVenda.getCdItemDeVenda());
+            stmt.setInt(1, itemDeVenda.getCodItemDeVenda());
             ResultSet resultado = stmt.executeQuery();
             if (resultado.next()) {
                 Produto produto = new Produto();
                 Venda venda = new Venda();
-                itemDeVenda.setCdItemDeVenda(resultado.getInt("cdItemDeVenda"));
+                itemDeVenda.setCodItemDeVenda(resultado.getInt("codItemDeVenda"));
                 itemDeVenda.setQuantidade(resultado.getInt("quantidade"));
                 itemDeVenda.setValor(resultado.getDouble("valor"));
                 
-                produto.setCodProduto(resultado.getInt("cdProduto"));
-                venda.setCodVenda(resultado.getInt("cdVenda"));
+                produto.setCodProduto(resultado.getInt("codProduto"));
+                venda.setCodVenda(resultado.getInt("codVenda"));
                 
                 //Obtendo os dados completos do Cliente associado à Venda
                 ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -161,7 +165,8 @@ public class ItemDeVendaDAO {
                 retorno = itemDeVenda;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao buscar item de venda");
+            ex.printStackTrace();
         }
         return retorno;
     }

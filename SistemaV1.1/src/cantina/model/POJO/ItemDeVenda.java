@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ItemDeVenda implements Serializable {
 
-    private int cdItemDeVenda;
+    private int codItemDeVenda;
     private int quantidade;
     private double valor;
     private Produto produto;
@@ -13,12 +13,12 @@ public class ItemDeVenda implements Serializable {
     public ItemDeVenda() {
     }
 
-    public int getCdItemDeVenda() {
-        return cdItemDeVenda;
+    public int getCodItemDeVenda() {
+        return codItemDeVenda;
     }
 
-    public void setCdItemDeVenda(int cdItemDeVenda) {
-        this.cdItemDeVenda = cdItemDeVenda;
+    public void setCodItemDeVenda(int codItemDeVenda) {
+        this.codItemDeVenda = codItemDeVenda;
     }
 
     public int getQuantidade() {

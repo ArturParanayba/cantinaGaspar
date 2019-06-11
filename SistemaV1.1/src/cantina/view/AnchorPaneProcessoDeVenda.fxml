@@ -13,8 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="553.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="cantina.controller.AnchorPaneProcessoDeVendaController">
+<AnchorPane id="AnchorPane" prefHeight="553.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cantina.controller.AnchorPaneProcessoDeVendaController">
    <children>
       <SplitPane dividerPositions="0.3979933110367893" layoutX="29.0" layoutY="120.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -80,32 +79,32 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelVendaCod" text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="labelVendaCod" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelVendaCliente" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="labelVendaCliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelVendaValorTotal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Label fx:id="labelVendaValorTotal" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelVendaMtdDePagamento" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label fx:id="labelVendaMtdDePagamento" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelVendaPrdComprados" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="labelVendaPrdComprados" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="labelVendaData" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="labelVendaData" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -114,7 +113,7 @@
                   </GridPane>
                   <Group layoutX="48.0" layoutY="473.0">
                      <children>
-                        <Button fx:id="btnInserir" mnemonicParsing="false" prefHeight="27.0" prefWidth="109.0" text="Inserir" />
+                        <Button fx:id="btnInserir" mnemonicParsing="false" onAction="#btnInserir" prefHeight="27.0" prefWidth="109.0" text="Inserir" />
                         <Button fx:id="btnAlterar" layoutX="129.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="109.0" text="Alterar" />
                         <Button fx:id="btnRemover" layoutX="258.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="109.0" text="Remover" />
                      </children>

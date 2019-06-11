@@ -71,14 +71,24 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
     
     
     public void abrirTelaCadastroCliente() throws IOException{
-            AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastrosDeClientesPrincipal.fxml"));
-            anchorPane.getChildren().setAll(a);
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastrosDeClientesPrincipal.fxml"));
+        anchorPane.getChildren().setAll(a);
     }
     
     public void abrirTelaCadastroDeProduto() throws IOException{
-            AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastroDeProdutoPrincipal.fxml"));
-            anchorPane.getChildren().setAll(a);
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneCadastroDeProdutoPrincipal.fxml"));
+        anchorPane.getChildren().setAll(a);
     } 
+    
+    public void abrirTelaCadastroDeVendas() throws IOException{
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneProcessoDeVenda.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
+    
+    public void abrirTelaInsercaoDeVendas() throws IOException{
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneInsercaoDeVenda.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
             
     
     

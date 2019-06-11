@@ -28,47 +28,50 @@ public class VendaDAO {
     }
 
     public boolean inserir(Venda venda) {
-        String sql = "INSERT INTO vendas(data, valor, pago, cdCliente) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO vendas(data, valor,metododepagamento, codcliente) VALUES(?,?,?,?);";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(venda.getData()));
             stmt.setDouble(2, venda.getValor());
-            stmt.setBoolean(3, venda.getPago());
+            stmt.setString(3, venda.getMetodoDePagamento());
             stmt.setInt(4, venda.getCliente().getCodCliente());
             stmt.execute();
             return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {            
+            System.err.println("Erro ao inserir Venda. Verificar SQL");
+            ex.printStackTrace();
             return false;
         }
     }
 
     public boolean alterar(Venda venda) {
-        String sql = "UPDATE clientes SET data=?, valor=?, pago=?, cdCliente=? WHERE cdVenda=?";
+        String sql = "UPDATE vendasdata, SET data=?, valor=?, metododepagamento=?, codCliente=? WHERE codVenda=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(venda.getData()));
             stmt.setDouble(2, venda.getValor());
-            stmt.setBoolean(3, venda.getPago());
+            stmt.setString(3, venda.getMetodoDePagamento());
             stmt.setInt(4, venda.getCliente().getCodCliente());
             stmt.setInt(5, venda.getCodVenda());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao alterar Venda. Verificar SQL");
+            ex.printStackTrace();
             return false;
         }
     }
 
     public boolean remover(Venda venda) {
-        String sql = "DELETE FROM vendas WHERE cdVenda=?";
+        String sql = "DELETE FROM vendas WHERE codVenda=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, venda.getCodVenda());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao remover venda. Verificar SQL");
+            ex.printStackTrace();
             return false;
         }
     }
@@ -84,11 +87,11 @@ public class VendaDAO {
                 Cliente cliente = new Cliente();
                 List<ItemDeVenda> itensDeVenda = new ArrayList();
 
-                venda.setCodVenda(resultado.getInt("cdVenda"));
+                venda.setCodVenda(resultado.getInt("codvenda"));
                 venda.setData(resultado.getDate("data").toLocalDate());
                 venda.setValor(resultado.getDouble("valor"));
-                venda.setPago(resultado.getBoolean("pago"));
-                cliente.setCodCliente(resultado.getInt("cdCliente"));
+                venda.setMetodoDePagamento(resultado.getString("metododepagamento"));
+                cliente.setCodCliente(resultado.getInt("codcliente"));
 
                 //Obtendo os dados completos do Cliente associado à Venda
                 ClienteDAO clienteDAO = new ClienteDAO();
@@ -105,13 +108,14 @@ public class VendaDAO {
                 retorno.add(venda);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao listar Vendas. Verificar SQL");
+            ex.printStackTrace();
         }
         return retorno;
     }
 
     public Venda buscar(Venda venda) {
-        String sql = "SELECT * FROM vendas WHERE cdVenda=?";
+        String sql = "SELECT * FROM vendas WHERE codVenda=?";
         Venda retorno = new Venda();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -122,19 +126,20 @@ public class VendaDAO {
                 venda.setCodVenda(resultado.getInt("cdVenda"));
                 venda.setData(resultado.getDate("data").toLocalDate());
                 venda.setValor(resultado.getDouble("valor"));
-                venda.setPago(resultado.getBoolean("pago"));
+                venda.setMetodoDePagamento(resultado.getString("metododepagamento"));
                 cliente.setCodCliente(resultado.getInt("cdCliente"));
                 venda.setCliente(cliente);
                 retorno = venda;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao buscar Venda. Verificar SQL");
+            ex.printStackTrace();
         }
         return retorno;
     }
 
     public Venda buscarUltimaVenda() {
-        String sql = "SELECT max(cdVenda) FROM vendas";
+        String sql = "SELECT max(codVenda) FROM vendas";
         Venda retorno = new Venda();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -145,14 +150,15 @@ public class VendaDAO {
                 return retorno;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao buscar ultima venda. Verficar SQL");
+            ex.printStackTrace();            
         }
         return retorno;
     }
 
         //alterar metodo de acordo com o relatorio pedido pelo cliente
     public Map<Integer, ArrayList> listarQuantidadeVendasPorMes() {
-        String sql = "select count(cdVenda), extract(year from data) as ano, extract(month from data) as mes from vendas group by ano, mes order by ano, mes";
+        String sql = "select count(codVenda), extract(year from data) as ano, extract(month from data) as mes from vendas group by ano, mes order by ano, mes";
         Map<Integer, ArrayList> retorno = new HashMap();
         
         try {
@@ -174,7 +180,8 @@ public class VendaDAO {
             }
             return retorno;
         } catch (SQLException ex) {
-            Logger.getLogger(VendaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro ao listar quantidade de vendas por mes. Verificar SQL");
+            ex.printStackTrace();
         }
         return retorno;
     }
