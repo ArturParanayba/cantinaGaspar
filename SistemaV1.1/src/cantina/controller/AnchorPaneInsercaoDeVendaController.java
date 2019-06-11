@@ -21,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -51,10 +52,10 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
     private TextField textFieldValor;
 
     @FXML
-    private ComboBox ComboBoxVendaProduto;
+    private ComboBox comboBoxVendaProduto;
     
     @FXML
-    private TableView<ItemDeVenda> tableViewVendaItensDeVenda;
+    private TableView<ItemDeVenda> tableViewItensDeVenda;
     
     @FXML
     private TableColumn<ItemDeVenda, Produto> tableColumnItemDeVendaProduto;
@@ -66,10 +67,10 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
     private TableColumn<ItemDeVenda, Double> tableColumnItemDeVendaValor;
 
     @FXML
-    private TextField textFieldVendaItemDeVendaQuantidade;
+    private TextField textFieldItemDeVendaQuantidade;
 
     @FXML
-    private Button buttonAdicionar;
+    private Button btnAdicionar;
 
     @FXML
     private Button btnCancelar;
@@ -97,19 +98,19 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        clienteDAO.setConnection(connection);
-        produtoDAO.setConnection(connection);
-        carregarComboBoxMetodoDePagamento();
-        carregarComboBoxClientes();
-        carregarComboBoxProdutos();
-        tableColumnItemDeVendaProduto.setCellValueFactory(new PropertyValueFactory<>("produto"));
+       clienteDAO.setConnection(connection);
+       produtoDAO.setConnection(connection);
+       carregarComboBoxMetodoDePagamento();
+       carregarComboBoxClientes();
+       carregarComboBoxProdutos();
+       tableColumnItemDeVendaProduto.setCellValueFactory(new PropertyValueFactory<>("produto"));
        tableColumnItemDeVendaQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
        tableColumnItemDeVendaValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         
     }   
     
     public void carregarComboBoxMetodoDePagamento(){
-       mtdDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência");
+       mtdDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência", "Saldo em Conta");
        comboBoxMetodoDePagamento.setItems(mtdDePagamento);
     }
     
@@ -124,8 +125,33 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
     public void carregarComboBoxProdutos() {
         listProdutos = produtoDAO.listar();
         observableListProdutos = FXCollections.observableArrayList(listProdutos);
-        ComboBoxVendaProduto.setItems(observableListProdutos);
+        comboBoxVendaProduto.setItems(observableListProdutos);
         
+    }
+    
+    @FXML
+    public void btnAdicionar(){
+        Produto produto;
+        ItemDeVenda itemDeVenda = new ItemDeVenda();
+        if(comboBoxVendaProduto.getSelectionModel().getSelectedItem() != null){
+           produto = (Produto) comboBoxVendaProduto.getSelectionModel().getSelectedItem();
+           if(produto.getQuantidade() >= Integer.parseInt(textFieldItemDeVendaQuantidade.getText())){
+               itemDeVenda.setProduto((Produto) comboBoxVendaProduto.getSelectionModel().getSelectedItem());
+               itemDeVenda.setQuantidade(Integer.parseInt(textFieldItemDeVendaQuantidade.getText()));
+               itemDeVenda.setValor(itemDeVenda.getProduto().getPreco() * itemDeVenda.getQuantidade());
+               venda.getItensDeVenda().add(itemDeVenda);
+               venda.setValor(venda.getValor() + itemDeVenda.getValor());
+               tableViewItensDeVenda.setItems(observableListItensDeVenda);
+               textFieldValor.setText(String.format("R$ " + "%.2f", venda.getValor()));
+           }else {
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+               alert.setHeaderText("Erro ao selecionar produto!");
+               alert.setContentText("O estoque não possuí esta quantidade de produto.\n Por favor, verificar antes de realizar a venda.");
+               alert.show();
+           }    
+               
+               
+        }
     }
     
 

@@ -5,6 +5,7 @@
  */
 package cantina.controller;
 
+import cantina.model.POJO.ItemDeVenda;
 import cantina.model.POJO.Venda;
 import cantina.model.dao.ItemDeVendaDAO;
 import cantina.model.dao.ProdutoDAO;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -130,6 +132,8 @@ public class AnchorPaneProcessoDeVendaController implements Initializable {
 
     public void btnInserir() throws IOException {
         Venda venda = new Venda();
+        List<ItemDeVenda> listItensDeVenda = new ArrayList<>();
+        venda.setItensDeVenda(listItensDeVenda);
         boolean btnConfirmarClicked = showAnchorPaneInsercaoDeVenda(venda);
         if (btnConfirmarClicked) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
