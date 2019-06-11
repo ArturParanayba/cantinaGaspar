@@ -37,7 +37,7 @@
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorPane" prefHeight="524.0" prefWidth="754.0">
+      <AnchorPane fx:id="anchorPane" prefHeight="435.0" prefWidth="754.0">
          <children>
             <Button fx:id="btnConsultarClientes" layoutX="89.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" prefHeight="39.0" prefWidth="226.0" text="Consultar Clientes">
                <font>
