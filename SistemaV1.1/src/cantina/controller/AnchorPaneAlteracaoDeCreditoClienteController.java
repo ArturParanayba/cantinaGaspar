@@ -59,14 +59,18 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
     public boolean btnAddCreditoClicked = false;
     public Cliente cliente;
 
-    ObservableList<String> mtdDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência");
+    ObservableList<String> mtdDePagamento ;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        comboBoxMtdPagamento.setItems(mtdDePagamento);
+    carregarComboBoxMetodoDePagamento();
        
-
+    }
+    
+    public void carregarComboBoxMetodoDePagamento(){
+       mtdDePagamento = FXCollections.observableArrayList("Cartão", "Dinheiro", "Transferência");
+       comboBoxMtdPagamento.setItems(mtdDePagamento);
     }
 
     public Stage getDialogStage() {
