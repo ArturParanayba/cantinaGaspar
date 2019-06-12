@@ -142,6 +142,7 @@ public class AnchorPaneProcessoDeVendaController implements Initializable {
             alert.setContentText("Venda Realizada com sucesso!");
             alert.show();
             vendaDAO.inserir(venda);
+            // colocar metodo para atualizar credito caso o metodo de pagamento seja "Debito em conta"
             carregarTableViewVendas();
         }
 

@@ -93,6 +93,7 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
     
     private Venda venda;
+    private Cliente cliente;
     private Stage dialogStage;
     private boolean buttonConfirmarClicked = false;
     
@@ -141,6 +142,7 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
                itemDeVenda.setValor(itemDeVenda.getProduto().getPreco() * itemDeVenda.getQuantidade());
                venda.getItensDeVenda().add(itemDeVenda);
                venda.setValor(venda.getValor() + itemDeVenda.getValor());
+               observableListItensDeVenda = FXCollections.observableArrayList(venda.getItensDeVenda());
                tableViewItensDeVenda.setItems(observableListItensDeVenda);
                textFieldValor.setText(String.format("R$ " + "%.2f", venda.getValor()));
            }else {
@@ -149,11 +151,77 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
                alert.setContentText("O estoque não possuí esta quantidade de produto.\n Por favor, verificar antes de realizar a venda.");
                alert.show();
            }    
-               
-               
         }
     }
     
+    @FXML
+    public void btnConfirmar(){
+        
+        
+        
+        if (validarEntradaDeDados()) {
+            venda.setCliente((Cliente) comboBoxVendaClientes.getSelectionModel().getSelectedItem());
+            venda.setMetodoDePagamento(comboBoxMetodoDePagamento.getSelectionModel().getSelectedItem().toString());
+            verificarMetodoDePagamento();
+            venda.setData(datePickerVendaData.getValue());
+            buttonConfirmarClicked = true;
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Venda cadastrada com sucesso!");
+            alert.setContentText("A venda nº" + venda.getCodVenda() + " no valor de: " + venda.getValor() +",\n para o(a) " + venda.getCliente() + " foi realizada com sucesso!" );
+            alert.show();
+
+        }
+    }
+    
+    public void btnCancelar(){
+        getDialogStage().close();
+    }
+    
+    public boolean validarEntradaDeDados(){
+        String errorMessage = "";
+        
+        if(comboBoxVendaClientes.getSelectionModel().getSelectedItem() == null){
+                errorMessage += "Nenhum cliente foi selecionado.\n";
+        }
+        if(datePickerVendaData.getValue() == null) {
+                errorMessage += "Nenhuma data foi selecionada.\n";
+        }
+        if(comboBoxVendaClientes.getSelectionModel().getSelectedItem() == null){
+                errorMessage += "Nenhum metodo de pagamento foi selecionado.\n";
+        }
+        if(observableListItensDeVenda == null){
+                errorMessage += "Nenhum item de venda foi selecionado.\n";
+        }
+        if(errorMessage.length() == 0){
+            return true;
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro no cadastro");
+            alert.setHeaderText("Opa, parece que temos um problema aqui...");
+            alert.setContentText(errorMessage);
+            alert.show();
+            return false;
+        } 
+ 
+    }
+    public void verificarMetodoDePagamento() {
+        String metodoDePagamento = comboBoxMetodoDePagamento.getSelectionModel().getSelectedItem().toString();
+        if (metodoDePagamento.contentEquals("Saldo em Conta")) {
+            double valorAlterado = venda.getCliente().getSaldo() - venda.getValor();
+            String valorFormatado = String.format("R$ " + "%.2f", valorAlterado);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Atenção!");
+            alert.setContentText("Esta venda está sendo realizada com o saldo em conta. Sendo assim o credito do(a)" + venda.getCliente() + "\n passará a ser de: " + valorFormatado);
+            alert.showAndWait();
+            alterarSaldo();
+        }
+    }
+    
+        public void alterarSaldo() {
+           int codCliente = venda.getCliente().getCodCliente();
+            double valorADepositar = venda.getCliente().getSaldo() - venda.getValor();
+            clienteDAO.alterarSaldoNaVenda(valorADepositar, codCliente);
+    }
 
     public Venda getVenda() {
         return venda;

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import cantina.model.POJO.Cliente;
+import cantina.model.POJO.Venda;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.Locale;
 import javafx.scene.control.Alert;
 
 public class ClienteDAO {
+    
 //conexão com o banco 
 
     private Connection connection;
@@ -44,7 +46,6 @@ public class ClienteDAO {
             return false;
         }
     }
-
 
     public boolean alterar(Cliente cliente) {
         //alterar nome da tabela de clientes de acordo com o banco!
@@ -123,13 +124,27 @@ public class ClienteDAO {
         return retorno;
     }
 
-    //Verificar como colocar o metodo de pagamento
+    public boolean alterarSaldoNaVenda(Double valorADepositar, int codCliente) {
+        try {
+            String update = "UPDATE cliente SET saldo=? WHERE codcliente=?";
+            PreparedStatement updateStmt = connection.prepareStatement(update);
+            updateStmt.setDouble(1, valorADepositar);
+            updateStmt.setInt(2, codCliente);
+
+            updateStmt.execute();
+        } catch (SQLException ex) {
+            System.err.println("Erro ao alterar saldo pela venda, com o metodo de pagamento 'Saldo em conta'");
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public boolean inserirSaldo(Cliente cliente) {
         //pega a data do dia   
         java.util.Date uDate = new java.util.Date();
 
         java.sql.Date sDate = convertUtilToSql(uDate);
-
 
         // formata de String para Date
         System.out.println(cliente.getMetodoDePagamento() + "   DAO");
@@ -162,8 +177,7 @@ public class ClienteDAO {
         } catch (SQLException ex) {
             System.err.println("Erro ao inserir Saldo. Verificar SQL");
             ex.printStackTrace();
-                   
-            
+
             return false;
         }
 

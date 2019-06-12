@@ -2,9 +2,12 @@
 package cantina.controller;
 
 
+import cantina.model.POJO.ItemDeVenda;
 import cantina.model.POJO.Venda;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -93,6 +96,8 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
     
     public void abrirTelaInsercaoDeVendas() throws IOException{
         Venda venda = new Venda();
+        List<ItemDeVenda> listItensDeVenda = new ArrayList<>();
+        venda.setItensDeVenda(listItensDeVenda);
         btnRealizarVendaClicked = showAnchorPaneInsercaoDeVenda(venda);
     }
     
