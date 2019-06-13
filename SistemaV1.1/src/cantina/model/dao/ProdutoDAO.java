@@ -38,13 +38,13 @@ public class ProdutoDAO {
     }
 
     public boolean alterar(Produto produto) {
-        String sql = "UPDATE produtos SET nome=?, preco=? WHERE codProduto=?";
+        String sql = "UPDATE produtos SET nome=?, preco=?, quantidade=? WHERE codProduto=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, produto.getNome());
             stmt.setDouble(2, produto.getPreco());
-            //stmt.setInt(3, produto.getQuantidade());
-            stmt.setInt(3, produto.getCodProduto());
+            stmt.setInt(3, produto.getQuantidade());
+            stmt.setInt(4, produto.getCodProduto());
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -89,7 +89,7 @@ public class ProdutoDAO {
     }
     
     public Produto buscar(Produto produto) {
-        String sql = "SELECT * FROM produtos WHERE cdProduto=?";
+        String sql = "SELECT * FROM produtos WHERE codProduto=?";
         Produto retorno = new Produto();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
