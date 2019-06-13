@@ -30,15 +30,15 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="408.0">
                <children>
-                  <Text layoutX="125.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalhes da Venda">
+                  <Text layoutX="159.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalhes da Venda">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Text>
-                  <GridPane layoutX="47.0" layoutY="60.0" prefHeight="398.0" prefWidth="368.0">
+                  <GridPane layoutX="54.0" layoutY="36.0" prefHeight="398.0" prefWidth="368.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.0" minWidth="10.0" prefWidth="163.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="108.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="172.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="122.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -51,73 +51,83 @@
                      <children>
                         <Label text="Código da venda:">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
                         <Label text="Cliente:" GridPane.rowIndex="1">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
                         <Label text="Método de pagamento:" GridPane.rowIndex="4">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="16.0" />
                            </font>
                         </Label>
                         <Label text="Valor total:" GridPane.rowIndex="5">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
                         <Label text="Data:" GridPane.rowIndex="2">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
                         <Label text="Produtos comprados:" GridPane.rowIndex="3">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="labelVendaCod" GridPane.columnIndex="1">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font>
                         </Label>
                         <Label fx:id="labelVendaCliente" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="labelVendaValorTotal" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="labelVendaMtdDePagamento" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="labelVendaPrdComprados" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
                            </font>
                         </Label>
                         <Label fx:id="labelVendaData" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelVendaPrdComprados" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelVendaMtdDePagamento" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelVendaValorTotal" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="14.0" />
                            </font>
                         </Label>
                      </children>
                   </GridPane>
                   <Group layoutX="48.0" layoutY="473.0">
                      <children>
-                        <Button fx:id="btnInserir" mnemonicParsing="false" onAction="#btnInserir" prefHeight="27.0" prefWidth="109.0" text="Inserir" />
-                        <Button fx:id="btnAlterar" layoutX="129.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="109.0" text="Alterar" />
-                        <Button fx:id="btnRemover" layoutX="258.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="109.0" text="Remover" />
+                        <Button fx:id="btnInserir" layoutX="74.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnInserir" prefHeight="27.0" prefWidth="159.0" text="Inserir">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Button>
+                        <Button fx:id="btnRemover" layoutX="258.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnRemover" prefHeight="27.0" prefWidth="109.0" text="Remover" textFill="RED">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Button>
                      </children>
                   </Group>
+                  <Button fx:id="btnMenuPrincipal" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Menu Principal" textFill="#0676ff">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
         </items>
