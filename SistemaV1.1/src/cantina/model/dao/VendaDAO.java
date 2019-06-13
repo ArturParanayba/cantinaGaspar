@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import cantina.model.POJO.Cliente;
 import cantina.model.POJO.ItemDeVenda;
 import cantina.model.POJO.Venda;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class VendaDAO {
 
@@ -37,7 +39,7 @@ public class VendaDAO {
             stmt.setInt(4, venda.getCliente().getCodCliente());
             stmt.execute();
             return true;
-        } catch (SQLException ex) {            
+        } catch (SQLException ex) {
             System.err.println("Erro ao inserir Venda. Verificar SQL");
             ex.printStackTrace();
             return false;
@@ -151,28 +153,27 @@ public class VendaDAO {
             }
         } catch (SQLException ex) {
             System.err.println("Erro ao buscar ultima venda. Verficar SQL");
-            ex.printStackTrace();            
+            ex.printStackTrace();
         }
         return retorno;
     }
 
-        //alterar metodo de acordo com o relatorio pedido pelo cliente
+    //alterar metodo de acordo com o relatorio pedido pelo cliente
     public Map<Integer, ArrayList> listarQuantidadeVendasPorMes() {
         String sql = "select count(codVenda), extract(year from data) as ano, extract(month from data) as mes from vendas group by ano, mes order by ano, mes";
         Map<Integer, ArrayList> retorno = new HashMap();
-        
+
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet resultado = stmt.executeQuery();
 
             while (resultado.next()) {
                 ArrayList linha = new ArrayList();
-                if (!retorno.containsKey(resultado.getInt("ano")))
-                {
+                if (!retorno.containsKey(resultado.getInt("ano"))) {
                     linha.add(resultado.getInt("mes"));
                     linha.add(resultado.getInt("count"));
                     retorno.put(resultado.getInt("ano"), linha);
-                }else{
+                } else {
                     ArrayList linhaNova = retorno.get(resultado.getInt("ano"));
                     linhaNova.add(resultado.getInt("mes"));
                     linhaNova.add(resultado.getInt("count"));
@@ -184,5 +185,26 @@ public class VendaDAO {
             ex.printStackTrace();
         }
         return retorno;
+    }
+
+    public int buscarVendasRealizadasHoje() {
+        int qtdDeVendas = 0;
+        LocalDate date = LocalDate.now();
+        Date dateFormated = Date.valueOf(date);
+        try {
+            String sql = "SELECT COUNT(*) FROM vendas where data = ?;";
+            PreparedStatement insertStmt = connection.prepareStatement(sql);
+            insertStmt.setDate(1, dateFormated);
+        } catch (SQLException ex) {
+            System.err.println("Erro ao buscar ultima venda. Verficar SQL");
+            ex.printStackTrace();
+        }
+        
+    return qtdDeVendas;
+    }
+
+    private static java.sql.Date convertUtilToSql(java.util.Date uDate) {
+        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+        return sDate;
     }
 }
