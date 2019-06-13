@@ -96,17 +96,6 @@ public class AnchorPaneCadastroDeProdutoController implements Initializable {
     }
     
     public void btnCancelar(){
-        
-        if(textFieldNomeProduto != null){
-            Alert alert = new Alert(Alert.AlertType.WARNING,
-            "Verificamos que existem dados preenchidos que ainda não foram salvos.\n Você deseja realmente cancelar esta operação?",
-                    ButtonType.YES, ButtonType.NO);
-            alert.setTitle("Atenção!");
-            Optional<ButtonType> resultado = alert.showAndWait();
-            
-            if(resultado.get() == ButtonType.YES){
               dialogStage.close();  
-            }     
-        }
     }
 }

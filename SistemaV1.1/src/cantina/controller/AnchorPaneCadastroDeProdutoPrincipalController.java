@@ -64,6 +64,9 @@ public class AnchorPaneCadastroDeProdutoPrincipalController implements Initializ
     @FXML
     private Button btnRemover;
     
+    @FXML
+    private Button btnMenuPrincipal;
+    
     private List<Produto> listProdutos;
     private ObservableList<Produto> observableListProdutos;
     
@@ -101,7 +104,7 @@ public class AnchorPaneCadastroDeProdutoPrincipalController implements Initializ
         if(produto != null){
             labelProdutoCodigo.setText(String.valueOf(produto.getCodProduto()));
             labelProdutoNome.setText(produto.getNome());
-            labelProdutoPreco.setText(String.valueOf(produto.getPreco()));
+            labelProdutoPreco.setText(String.format("R$ " + "%.2f", produto.getPreco()));
   
         }else{
             labelProdutoCodigo.setText("");

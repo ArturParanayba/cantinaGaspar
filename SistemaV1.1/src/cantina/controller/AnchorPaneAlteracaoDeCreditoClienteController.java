@@ -105,7 +105,7 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
         } else if (valor > 0) {
             labelSaldoAtual.setTextFill(Color.GREEN);
         }
-        labelSaldoAtual.setText("R$ " + Double.toString(cliente.getSaldo()).replace(".", ","));
+        labelSaldoAtual.setText(String.format("R$ " + "%.2f", cliente.getSaldo()).replace(".", ","));
     }
     
 
@@ -146,29 +146,21 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
 
     @FXML
     public void btnAddCredito() throws ParseException {
-
-        try {
+        if (validarEntradaDeDados()) {
             double saldoAposDeposito = Double.parseDouble(labelValorAposDeposito.getText().replace(",", ".").replace("R$ ", ""));
             double valorDeposito = Double.parseDouble(textFieldValorDepositado.getText().replace(",", ".").replace("R$ ", ""));
-            
+
             //seta o valor novo saldo
-            cliente.setSaldo(saldoAposDeposito); 
+            cliente.setSaldo(saldoAposDeposito);
             //seta o valor do deposito
             cliente.setValorDepositoCredito(valorDeposito);
             //seta a string do método de pagamento
             String metodo = comboBoxMtdPagamento.getSelectionModel().getSelectedItem();
             //seta o metodo de pagamento
             cliente.setMetodoDePagamento(metodo);
-   
+
             btnAddCreditoClicked = true;
             dialogStage.close();
-
-        } catch (NullPointerException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ops!");
-            alert.setHeaderText("Por favor, selecione o método de pagamento desta operação.");
-            alert.show();
-            ex.printStackTrace();
         }
     }
 
@@ -177,5 +169,31 @@ public class AnchorPaneAlteracaoDeCreditoClienteController implements Initializa
 
         dialogStage.close();
     }
+    
+    public boolean validarEntradaDeDados(){
+        String errorMessage = "";
 
+        if (comboBoxMtdPagamento.getSelectionModel().getSelectedItem() == null) {
+            errorMessage += "Nenhum metodo de pagamento foi selecionado.\n\n";
+        }
+        if (textFieldValorDepositado.getText().isEmpty()) {
+            errorMessage += "O valor a ser depositado está em branco.\n\n";
+        }
+        if (labelValorAposDeposito.getText().isEmpty()) {
+            errorMessage += "Para confirmar a inserção de crédito, digite o valor a ser depositado, clique no botão 'Calcular' e após isto confirme a ação.";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro no cadastro");
+            alert.setHeaderText("Opa, temos um problema aqui...");
+            alert.setContentText(errorMessage);
+            alert.show();
+            return false;
+        }
+
+    }
 }
+
+
