@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -205,9 +206,17 @@ public class AnchorPaneCadastrosDeClientesPrincipalController implements Initial
 
     }
     
-    public void btnMenuPrincipal() throws IOException{    
-        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/VBoxTelaPrincipal.fxml"));
-        anchorPane.getChildren().setAll(a);
+    public void btnMenuPrincipal() throws IOException{
+        
+//        Parent root = FXMLLoader.load(FXMLVBoxTelaPrincipalController.class.getResource("/cantina/view/VBoxTelaPrincipal.fxml"));
+//        
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+        
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(FXMLVBoxTelaPrincipalController.class.getResource("/cantina/view/VBoxTelaPrincipal.fxml"));
+//        VBox page = (VBox) loader.load();
+        //anchorPane.getChildren().setAll(root);
     
         
     }

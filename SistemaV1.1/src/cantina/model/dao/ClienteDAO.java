@@ -146,8 +146,6 @@ public class ClienteDAO {
 
         java.sql.Date sDate = convertUtilToSql(uDate);
 
-        // formata de String para Date
-        System.out.println(cliente.getMetodoDePagamento() + "   DAO");
         try {
             //INSERT
             String insert = "INSERT INTO insercaodecredito (metododepagamento, data, valor, codcliente) VALUES (?,?,?,?)";
