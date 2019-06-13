@@ -6,6 +6,7 @@
 package cantina.controller;
 
 import cantina.model.POJO.ItemDeVenda;
+import cantina.model.POJO.Produto;
 import cantina.model.POJO.Venda;
 import cantina.model.dao.ItemDeVendaDAO;
 import cantina.model.dao.ProdutoDAO;
@@ -15,6 +16,7 @@ import cantina.model.database.DatabaseFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -80,9 +82,15 @@ public class AnchorPaneProcessoDeVendaController implements Initializable {
 
     @FXML
     private Button btnRemover;
+    
+    @FXML
+    private Button btnMenuPrincipal;
 
     private List<Venda> listVendas;
     private ObservableList<Venda> observableListVendas;
+    
+    public Stage dialogStage;
+    public boolean btnConsultarVendasClicked = false;
 
     //manipulação do banco de dados
     private final Database database = DatabaseFactory.getDatabase("postgresql");
@@ -129,25 +137,85 @@ public class AnchorPaneProcessoDeVendaController implements Initializable {
         tableViewVendas.setItems(observableListVendas);
 
     }
+    
+        public Stage getDialogStage() {
+        return dialogStage;
+    }
 
+
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+
+
+    public boolean btnConsultarVendasClicked() {
+        return btnConsultarVendasClicked;
+    }
+
+
+    public void btnConsultarVendasClicked(boolean btnConsultarVendasClicked) {
+        this.btnConsultarVendasClicked = btnConsultarVendasClicked;
+    }
+    
+    @FXML
     public void btnInserir() throws IOException {
         Venda venda = new Venda();
         List<ItemDeVenda> listItensDeVenda = new ArrayList<>();
         venda.setItensDeVenda(listItensDeVenda);
         boolean btnConfirmarClicked = showAnchorPaneInsercaoDeVenda(venda);
         if (btnConfirmarClicked) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Sucesso na Venda");
-            alert.setHeaderText("Sucesso!");
-            alert.setContentText("Venda Realizada com sucesso!");
-            alert.show();
-            vendaDAO.inserir(venda);
-            // colocar metodo para atualizar credito caso o metodo de pagamento seja "Debito em conta"
-            carregarTableViewVendas();
+            try {
+                connection.setAutoCommit(false);
+                vendaDAO.setConnection(connection);
+                vendaDAO.inserir(venda);
+                itemDeVendaDAO.setConnection(connection);
+                produtoDAO.setConnection(connection);
+                for (ItemDeVenda listItemDeVenda : venda.getItensDeVenda()) {
+                    Produto produto = listItemDeVenda.getProduto();
+                    listItemDeVenda.setVenda(vendaDAO.buscarUltimaVenda());
+                    itemDeVendaDAO.inserir(listItemDeVenda);
+                    produto.setQuantidade(produto.getQuantidade() - listItemDeVenda.getQuantidade());
+                    produtoDAO.alterar(produto);
+                }
+                connection.commit();
+                carregarTableViewVendas();
+            } catch (SQLException ex) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex1) {
+                    System.err.println("Erro ao fazer rollback no salvando da venda");
+                }
+                System.err.println("Erro !!! ");
+            }
         }
 
     }
     
+    public void btnRemover() throws IOException, SQLException{
+        Venda venda = tableViewVendas.getSelectionModel().getSelectedItem();
+        if(venda != null){
+            connection.setAutoCommit(false);
+            vendaDAO.setConnection(connection);
+            itemDeVendaDAO.setConnection(connection);
+            produtoDAO.setConnection(connection);
+            for(ItemDeVenda listItemDeVenda : venda.getItensDeVenda()){
+                Produto produto = listItemDeVenda.getProduto();
+                produto.setQuantidade(produto.getCodProduto() + listItemDeVenda.getQuantidade());
+                produtoDAO.alterar(produto);
+                itemDeVendaDAO.remover(listItemDeVenda);
+            }
+                vendaDAO.remover(venda);
+                connection.commit();
+                carregarTableViewVendas();
+        } else {
+            Alert alert = new Alert (Alert.AlertType.ERROR);
+            alert.setContentText("Para remover, escolha uma venda na tabela.");
+            alert.show();
+        }
+    }
+            
+            
+    //INSERÇÃO DE VENDA
     public boolean showAnchorPaneInsercaoDeVenda(Venda venda) throws IOException {
         //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
         FXMLLoader loader = new FXMLLoader();

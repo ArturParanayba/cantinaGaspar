@@ -89,7 +89,7 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
     
     private final Database database = DatabaseFactory.getDatabase("postgresql");
     private final Connection connection = database.conectar();
-    private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final ClienteDAO clienteDAO = new ClienteDAO(); 
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
     
     private Venda venda;
@@ -167,8 +167,9 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
             buttonConfirmarClicked = true;
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Venda cadastrada com sucesso!");
-            alert.setContentText("A venda nº" + venda.getCodVenda() + " no valor de: " + venda.getValor() +",\n para o(a) " + venda.getCliente() + " foi realizada com sucesso!" );
-            alert.show();
+            alert.setContentText("A venda no valor de: " + venda.getValor() +",\n para o(a) " + venda.getCliente() + " foi realizada com sucesso!" );
+            alert.showAndWait();
+            getDialogStage().close();
 
         }
     }
@@ -186,7 +187,7 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
         if(datePickerVendaData.getValue() == null) {
                 errorMessage += "Nenhuma data foi selecionada.\n";
         }
-        if(comboBoxVendaClientes.getSelectionModel().getSelectedItem() == null){
+        if(comboBoxMetodoDePagamento.getSelectionModel().getSelectedItem() == null){
                 errorMessage += "Nenhum metodo de pagamento foi selecionado.\n";
         }
         if(observableListItensDeVenda == null){
@@ -197,7 +198,7 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
         }else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erro no cadastro");
-            alert.setHeaderText("Opa, parece que temos um problema aqui...");
+            alert.setHeaderText("Opa, temos um problema aqui...");
             alert.setContentText(errorMessage);
             alert.show();
             return false;
@@ -211,7 +212,7 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
             String valorFormatado = String.format("R$ " + "%.2f", valorAlterado);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Atenção!");
-            alert.setContentText("Esta venda está sendo realizada com o saldo em conta. Sendo assim o credito do(a)" + venda.getCliente() + "\n passará a ser de: " + valorFormatado);
+            alert.setContentText("Esta venda está sendo realizada com o saldo em conta. Sendo assim o credito do(a) " + venda.getCliente() + "\n passará a ser de: " + valorFormatado);
             alert.showAndWait();
             alterarSaldo();
         }
@@ -219,8 +220,8 @@ public class AnchorPaneInsercaoDeVendaController implements Initializable {
     
         public void alterarSaldo() {
            int codCliente = venda.getCliente().getCodCliente();
-            double valorADepositar = venda.getCliente().getSaldo() - venda.getValor();
-            clienteDAO.alterarSaldoNaVenda(valorADepositar, codCliente);
+           double valorADepositar = venda.getCliente().getSaldo() - venda.getValor();
+           clienteDAO.alterarSaldoNaVenda(valorADepositar, codCliente);
     }
 
     public Venda getVenda() {
