@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -32,12 +31,12 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Relatórios">
               <items>
-                <MenuItem fx:id="menuItemRelatoriosQuantidadeProdutosEstoque" mnemonicParsing="false" text="Quantidade de Produtos em Estoque" />
+                <MenuItem fx:id="menuItemRelatoriosQuantidadeProdutosEstoque" mnemonicParsing="false" onAction="#abrirTelaRelatoriosQuantidadeProdutos" text="Quantidade de Produtos em Estoque" />
               </items>
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorPane" prefHeight="435.0" prefWidth="754.0">
+      <AnchorPane fx:id="anchorPane" prefHeight="529.0" prefWidth="754.0">
          <children>
             <Button fx:id="btnConsultarClientes" layoutX="89.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" prefHeight="39.0" prefWidth="226.0" text="Consultar Clientes">
                <font>
@@ -54,56 +53,16 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnRealizarVenda" layoutX="89.0" layoutY="365.0" mnemonicParsing="false" onAction="#abrirTelaInsercaoDeVendas" prefHeight="39.0" prefWidth="226.0" text="Realizar Venda" textFill="#16b22e">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
             <Text layoutX="174.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema de Vendas " textAlignment="CENTER" wrappingWidth="474.80078125">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Label fx:id="labelVendasRealizadas" layoutX="488.0" layoutY="124.0" text="Vendas Realizadas Hoje">
+            <Button fx:id="btnVerificarEstoque" layoutX="411.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaRelatoriosQuantidadeProdutos" prefHeight="39.0" prefWidth="226.0" text="Verficar Estoque">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
-            </Label>
-            <Label fx:id="qtdVendasRealizadas" layoutX="578.0" layoutY="152.0" text="43">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelValorVendasRealizadas" layoutX="472.0" layoutY="185.0" text="Valor das vendas realizadas">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="qtdValorVendasRealizadas" layoutX="552.0" layoutY="212.0" text="R$547,89">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelClientesSaldoNegativo" layoutX="469.0" layoutY="255.0" text="Clientes com saldo negativo">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="qtdClientesSaldoNegativo" layoutX="583.0" layoutY="282.0" text="7">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelValorSaldoNegativo" layoutX="480.0" layoutY="317.0" text="Valor de saldos negativos">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="qtdSaldoNegativo" layoutX="544.0" layoutY="344.0" text="-R$172,15" textFill="#ff3c00">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            </Button>
          </children></AnchorPane>
    </children>
 </VBox>

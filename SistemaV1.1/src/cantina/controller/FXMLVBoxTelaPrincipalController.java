@@ -4,6 +4,7 @@ package cantina.controller;
 
 import cantina.model.POJO.ItemDeVenda;
 import cantina.model.POJO.Venda;
+import cantina.model.dao.VendaDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -42,39 +43,16 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
 
     @FXML
     private Button btnConsultarVendas;
-
+    
     @FXML
-    private Button btnRealizarVenda;
-
-    @FXML
-    private Label labelVendasRealizadas;
-
-    @FXML
-    private Label qtdVendasRealizadas;
-
-    @FXML
-    private Label labelValorVendasRealizadas;
-
-    @FXML
-    private Label qtdValorVendasRealizadas;
-
-    @FXML
-    private Label labelClientesSaldoNegativo;
-
-    @FXML
-    private Label qtdClientesSaldoNegativo;
-
-    @FXML
-    private Label labelValorSaldoNegativo;
-
-    @FXML
-    private Label qtdSaldoNegativo;
+    private Button btnVerificarEstoque;
     
     boolean btnMenuPrincipalClicked = false;
     boolean btnRealizarVendaClicked = false;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        //qtdValorVendasRealizadas.setText(String.valueOf(VendaDAO.buscarVendasRealizadasHoje()));
     }   
     
     
@@ -92,40 +70,10 @@ public class FXMLVBoxTelaPrincipalController implements Initializable {
     public void abrirTelaCadastroDeVendas() throws IOException{
         AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneProcessoDeVenda.fxml"));
         anchorPane.getChildren().setAll(a);
-    }
-    
-    public void abrirTelaInsercaoDeVendas() throws IOException{
-        Venda venda = new Venda();
-        List<ItemDeVenda> listItensDeVenda = new ArrayList<>();
-        venda.setItensDeVenda(listItensDeVenda);
-        btnRealizarVendaClicked = showAnchorPaneInsercaoDeVenda(venda);
-    }
-    
-        public boolean showAnchorPaneInsercaoDeVenda(Venda venda) throws IOException {
-        //este parte coloca na memoria a pagina de cadastro de clientes e gera a pagina
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(AnchorPaneInsercaoDeVendaController.class.getResource("/cantina/view/AnchorPaneInsercaoDeVenda.fxml"));
-        AnchorPane page = (AnchorPane) loader.load();
-
-        // Criando um Estágio de Diálogo (Stage Dialog)
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Registrar nova Venda");
-        Scene scene = new Scene(page);
-        dialogStage.setScene(scene);
-
-        //Setando o cliente no controller
-        AnchorPaneInsercaoDeVendaController controller = loader.getController();
-        controller.setDialogStage(dialogStage);
-        controller.setVenda(venda);
-
-        //Monstra o Dialog e espera até que o usuario feche
-        dialogStage.showAndWait();
-
-        return btnRealizarVendaClicked;
-
-    }
-   
-    
-    
+    }  
+    public void abrirTelaRelatoriosQuantidadeProdutos() throws IOException{
+    AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneRelatoriosQuantidadeProdutos.fxml"));
+    anchorPane.getChildren().setAll(a);
+    }  
     
 }
