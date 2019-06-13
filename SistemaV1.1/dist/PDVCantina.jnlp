@@ -8,8 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="PDVCantina.jar" size="58743" download="eager" />
-    <jar href="lib/postgresql-42.2.5.jar" size="825943" download="eager" />
+    <jar href="PDVCantina.jar" size="61149" download="eager" />
+    <jar href="lib\postgresql-42.2.5.jar" size="825943" download="eager" />
   </resources>
   <application-desc main-class="cantina.Main"  name="PDVCantina" >
   </application-desc>
