@@ -9,6 +9,7 @@ import cantina.model.POJO.Produto;
 import cantina.model.dao.ProdutoDAO;
 import cantina.model.database.Database;
 import cantina.model.database.DatabaseFactory;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.List;
@@ -16,18 +17,24 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
  *
- * @author artur
+ * @author artur-paranayba
  */
 public class AnchorPaneRelatoriosQuantidadeProdutosController implements Initializable {
+    
+    @FXML
+    private AnchorPane anchorPane;
+    
     @FXML
     private TableView<Produto> tableViewProdutos;
     
@@ -39,6 +46,9 @@ public class AnchorPaneRelatoriosQuantidadeProdutosController implements Initial
 
     @FXML
     private TableColumn<Produto, Integer> tableColumnProdutoQuantidade;
+    
+    @FXML
+    private Button btnMenuPrincipal;
 
     @FXML
     private Button btnImprimir;
@@ -69,5 +79,10 @@ public class AnchorPaneRelatoriosQuantidadeProdutosController implements Initial
         observableListProdutos = FXCollections.observableArrayList(listProdutos);
         tableViewProdutos.setItems(observableListProdutos);
     }
+    
+    public void abrirTelaMenuPrincipal() throws IOException{
+    AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/cantina/view/AnchorPaneMenuPrincipal.fxml"));
+    anchorPane.getChildren().setAll(a);
+    }  
     
 }
