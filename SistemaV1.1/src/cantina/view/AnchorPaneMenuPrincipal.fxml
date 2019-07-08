@@ -2,40 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="553.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cantina.controller.FXMLVBoxTelaPrincipalController">
-   <children>
-      <MenuBar>
-        <menus>
-          <Menu mnemonicParsing="false" text="Cadastros">
-            <items>
-                  <MenuItem fx:id="menuItemCadastrosClientes" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" text="Clientes" />
-                  <MenuItem fx:id="menuItemCadastroProduto" mnemonicParsing="false" onAction="#abrirTelaCadastroDeProduto" text="Produtos" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Processos">
-            <items>
-              <MenuItem fx:id="menuItemProcessosVendas" mnemonicParsing="false" onAction="#abrirTelaCadastroDeVendas" text="Vendas" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Relatórios">
-              <items>
-                <MenuItem fx:id="menuItemRelatoriosQuantidadeProdutosEstoque" mnemonicParsing="false" onAction="#abrirTelaRelatoriosQuantidadeProdutos" text="Quantidade de Produtos em Estoque" />
-                <MenuItem fx:id="menuItemRelatoriosQuantidadeVendas" mnemonicParsing="false" onAction="#abrirTelaRelatoriosVendas" text="Quantidade Vendas" />
-                <MenuItem fx:id="menuItemRelatoriosClientesNegativados" mnemonicParsing="false" onAction="#abrirTelaRelatoriosClientesNegativados" text="Clientes Negativados" />
-              </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-      <AnchorPane fx:id="anchorPane" prefHeight="529.0" prefWidth="737.0">
-         <children>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="cantina.controller.AnchorPaneMenuPrincipalController">
+    <children>
             <Button fx:id="btnCadastrarClientes" layoutX="89.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" prefHeight="39.0" prefWidth="226.0" text="Cadastrar Clientes">
                <font>
                   <Font name="System Bold" size="18.0" />
@@ -51,7 +23,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Text layoutX="174.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema de Vendas " textAlignment="CENTER" wrappingWidth="474.80078125">
+            <Text layoutX="100.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema de Vendas " textAlignment="CENTER" wrappingWidth="474.80078125">
                <font>
                   <Font size="24.0" />
                </font>
@@ -91,6 +63,5 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-         </children></AnchorPane>
-   </children>
-</VBox>
+         </children> 
+</AnchorPane>

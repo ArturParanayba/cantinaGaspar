@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -24,31 +25,28 @@
               <MenuItem fx:id="menuItemProcessosVendas" mnemonicParsing="false" onAction="#abrirTelaCadastroDeVendas" text="Vendas" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Gráficos">
-            <items>
-              <MenuItem fx:id="menuItemGraficosVendasPorMes" mnemonicParsing="false" text="Vendas por Mês" />
-            </items>
-          </Menu>
             <Menu mnemonicParsing="false" text="Relatórios">
               <items>
                 <MenuItem fx:id="menuItemRelatoriosQuantidadeProdutosEstoque" mnemonicParsing="false" onAction="#abrirTelaRelatoriosQuantidadeProdutos" text="Quantidade de Produtos em Estoque" />
+                <MenuItem fx:id="menuItemRelatoriosQuantidadeVendas" mnemonicParsing="false" onAction="#abrirTelaRelatoriosVendas" text="Quantidade Vendas" />
+                <MenuItem fx:id="menuItemRelatoriosClientesNegativados" mnemonicParsing="false" onAction="#abrirTelaRelatoriosClientesNegativados" text="Clientes Negativados" />
               </items>
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorPane" prefHeight="529.0" prefWidth="754.0">
+      <AnchorPane fx:id="anchorPane" prefHeight="529.0" prefWidth="737.0">
          <children>
-            <Button fx:id="btnConsultarClientes" layoutX="89.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" prefHeight="39.0" prefWidth="226.0" text="Consultar Clientes">
+            <Button fx:id="btnCadastrarClientes" layoutX="89.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaCadastroCliente" prefHeight="39.0" prefWidth="226.0" text="Cadastrar Clientes">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnConsultarProdutos" layoutX="89.0" layoutY="181.0" mnemonicParsing="false" onAction="#abrirTelaCadastroDeProduto" prefHeight="39.0" prefWidth="226.0" text="Consultar Produtos">
+            <Button fx:id="btnCadastrarProdutos" layoutX="89.0" layoutY="181.0" mnemonicParsing="false" onAction="#abrirTelaCadastroDeProduto" prefHeight="39.0" prefWidth="226.0" text="Cadastrar Produtos">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnConsultarVendas" layoutX="89.0" layoutY="241.0" mnemonicParsing="false" onAction="#abrirTelaCadastroDeVendas" prefHeight="39.0" prefWidth="226.0" text="Consultar Vendas">
+            <Button fx:id="btnCadastrarVendas" layoutX="89.0" layoutY="241.0" mnemonicParsing="false" onAction="#abrirTelaCadastroDeVendas" prefHeight="39.0" prefWidth="226.0" text="Cadastrar Vendas">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -58,11 +56,41 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="btnVerificarEstoque" layoutX="411.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaRelatoriosQuantidadeProdutos" prefHeight="39.0" prefWidth="226.0" text="Verficar Estoque">
+            <Button fx:id="btnVerificarEstoque" layoutX="421.0" layoutY="120.0" mnemonicParsing="false" onAction="#abrirTelaRelatoriosQuantidadeProdutos" prefHeight="39.0" prefWidth="226.0" text="Verficar Estoque">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
+            <Button fx:id="btnConsultarRelatorioVendas" layoutX="421.0" layoutY="181.0" mnemonicParsing="false" onAction="#abrirTelaRelatoriosVendas" prefHeight="39.0" prefWidth="226.0" text="Consultar Vendas">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnConsultarNegativos" layoutX="421.0" layoutY="241.0" mnemonicParsing="false" onAction="#abrirTelaRelatoriosClientesNegativados" prefHeight="39.0" prefWidth="226.0" text="Consultar Negativos">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Text layoutX="421.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes com saldo negativo" textAlignment="CENTER" wrappingWidth="253.296875">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Label fx:id="labelQtdClientesNegativos" layoutX="528.0" layoutY="360.0" textFill="#ff0804">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Text layoutX="421.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor de saldos negativos " textAlignment="CENTER" wrappingWidth="253.296875">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Label fx:id="labelVlrTotalSaldoNegativo" layoutX="485.0" layoutY="444.0" textFill="#ff0804">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
    </children>
 </VBox>
