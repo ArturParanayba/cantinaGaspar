@@ -14,12 +14,22 @@ import java.util.logging.Logger;
 import cantina.model.POJO.Cliente;
 import cantina.model.POJO.ItemDeVenda;
 import cantina.model.POJO.Venda;
+import cantina.model.database.Database;
+import cantina.model.database.DatabaseFactory;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class VendaDAO {
 
+
+public class VendaDAO {
+    
+    
+
+    private  Database database = DatabaseFactory.getDatabase("postgresql");
+    private  Connection connection1 = database.conectar();
+    
     private Connection connection;
+    
 
     public Connection getConnection() {
         return connection;
@@ -109,10 +119,12 @@ public class VendaDAO {
                 venda.setItensDeVenda(itensDeVenda);
                 retorno.add(venda);
             }
+
         } catch (SQLException ex) {
             System.err.println("Erro ao listar Vendas. Verificar SQL");
             ex.printStackTrace();
         }
+        
         return retorno;
     }
 
@@ -188,19 +200,25 @@ public class VendaDAO {
     }
 
     public int buscarVendasRealizadasHoje() {
-        int qtdDeVendas = 0;
+
+        int qtdVendas = 0;
         LocalDate date = LocalDate.now();
         Date dateFormated = Date.valueOf(date);
+  
+        
         try {
-            String sql = "SELECT COUNT(*) FROM vendas where data = ?;";
-            PreparedStatement insertStmt = connection.prepareStatement(sql);
-            insertStmt.setDate(1, dateFormated);
+            String sql = "SELECT COUNT(*) FROM vendas WHERE data=?";
+            PreparedStatement stmt = connection1.prepareStatement(sql);
+            stmt.setDate(1, dateFormated);            
+            ResultSet resultado = stmt.executeQuery();
+            resultado.next();
+            int contagem = resultado.getInt(1);
+            return contagem;
         } catch (SQLException ex) {
-            System.err.println("Erro ao buscar ultima venda. Verficar SQL");
+            System.err.println("Erro ao contagem de vendas. Verficar SQL");
             ex.printStackTrace();
         }
-        
-    return qtdDeVendas;
+            return qtdVendas;
     }
 
     private static java.sql.Date convertUtilToSql(java.util.Date uDate) {

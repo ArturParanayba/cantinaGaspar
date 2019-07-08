@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="538.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cantina.controller.AnchorPaneRelatorioDeVendasController">
+   <children>
+      <TableView fx:id="tableViewVendas" layoutY="60.0" prefHeight="392.0" prefWidth="754.0">
+        <columns>
+          <TableColumn fx:id="tableColumnVendaCodigo" prefWidth="111.0" text="Código " />
+          <TableColumn fx:id="tableColumnVendaCliente" prefWidth="477.0" text="Cliente" />
+            <TableColumn fx:id="tableColumnProdutoValor" prefWidth="165.0" text="Valor" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnImprimir" layoutX="632.0" layoutY="472.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="88.0" text="Gerar PDF" />
+      <Text layoutX="248.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Relatório de vendas realizadas hoje">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnMenuPrincipal" layoutX="24.0" layoutY="11.0" mnemonicParsing="false" onAction="#abrirTelaMenuPrincipal" text="Menu Principal" textFill="#0676ff">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

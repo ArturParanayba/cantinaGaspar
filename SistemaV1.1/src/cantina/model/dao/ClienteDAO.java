@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import cantina.model.POJO.Cliente;
 import cantina.model.POJO.Venda;
+import cantina.model.database.Database;
+import cantina.model.database.DatabaseFactory;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Locale;
 import javafx.scene.control.Alert;
@@ -18,6 +21,8 @@ import javafx.scene.control.Alert;
 public class ClienteDAO {
     
 //conexão com o banco 
+    private  Database database = DatabaseFactory.getDatabase("postgresql");
+    private  Connection connection1 = database.conectar();
 
     private Connection connection;
 
@@ -180,6 +185,71 @@ public class ClienteDAO {
         }
 
     }
+    
+    public List<Cliente> listarNegativados() {
+        String sql = "SELECT * FROM cliente WHERE saldo < 0";
+        List<Cliente> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setCodCliente(resultado.getInt("codcliente"));
+                cliente.setNome(resultado.getString("nome"));
+                cliente.setEmail(resultado.getString("email"));
+                cliente.setSaldo(resultado.getDouble("saldo"));
+                retorno.add(cliente);
+            }
+        } catch (SQLException ex) {
+            //System.err.println("Erro ao listar clientes");
+            System.err.println("Erro ao listar Cliente. Verificar SQL");
+            ex.printStackTrace();
+
+        }
+        return retorno;
+    }
+        
+    public  int contarTotalSaldoNegativo(){
+        
+        int ttSaldoNegativo = 0;
+  
+        
+        try {
+            String sql = "select count(saldo) from cliente where saldo < 0";
+            PreparedStatement stmt = connection1.prepareStatement(sql);   
+            ResultSet resultado = stmt.executeQuery();
+            resultado.next(); 
+            int contagem = resultado.getInt(1);
+            return contagem;
+        } catch (SQLException ex) {
+            System.err.println("Erro ao contar saldo negativo. Verficar SQL");
+            ex.printStackTrace();
+        }
+            return ttSaldoNegativo;
+        
+    }
+    
+    public  double contarTotalSaldoDevedor(){
+        
+        int ttSaldoDevedor = 0;
+  
+        
+        try {
+            String sql = "select sum(saldo) from cliente where saldo < 0";
+            PreparedStatement stmt = connection1.prepareStatement(sql);   
+            ResultSet resultado = stmt.executeQuery();
+            resultado.next(); 
+            int contagem = resultado.getInt(1);
+            System.out.println(contagem + " DAO");
+            return contagem;
+        } catch (SQLException ex) {
+            System.err.println("Erro ao contar valor total do saldo devedor. Verficar SQL");
+            ex.printStackTrace();
+        }
+            return ttSaldoDevedor;
+        
+    }
+    
 
     //CONVERSOR DE DATA JAVA.UTIL.DATE PARA JAVA.SQL.DATE
     private static java.sql.Date convertUtilToSql(java.util.Date uDate) {
